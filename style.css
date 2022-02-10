@@ -9,7 +9,6 @@ header {
   width: 100%;
   height: 60px;
   font-size: 1.3em;
-  padding-top: 5px;
 }
 p {
   padding-top: 20px;
@@ -22,8 +21,36 @@ h2 {
   padding-top: 15px;
   margin-right: 200px;
 }
+
+/* Width */
+.w20 { 
+  width: 20%;
+}
+.w40 {
+  width: 40%;
+}
+.w60 {
+  width: 60%;
+}
+.w80 {
+  width: 80%;
+}
 .w100 {
   width: 100%;
+}
+
+/* Height */
+.h20 {
+  height: 20%;
+}
+.h40 {
+  height: 40%;
+}
+.h60 {
+  height: 60%;
+}
+.h80 {
+  height: 80%;
 }
 .h100 {
   height: 100%;
@@ -33,6 +60,9 @@ h2 {
 }
 .noborder {
   border: none;
+}
+.verticalmid {
+  vertical-align: middle;
 }
 .center {
   text-align: center;
@@ -67,7 +97,6 @@ h2 {
 }
 .nobackground {
   background: none;
-  border: none;
 }
   
 /* Color */
@@ -79,6 +108,9 @@ h2 {
 }
 .white {
   color: white;
+}
+.red {
+  color: red;
 }
 /* Float */
 .right {
@@ -355,6 +387,7 @@ h2 {
 .mb-10 {
   margin-bottom: 5rem;
 }
+/* Display */
 .flex {
   display: flex;
 }
@@ -380,7 +413,6 @@ h2 {
 .headertext {
   width: 60%;
 }
-
 .hlabel {
   padding-right: 225px;
 }
@@ -390,11 +422,10 @@ h2 {
 }
 .loginbox {
   width: 25%;
-  height: 240px;
   border: 1px solid black;
   padding-left: 0.8%;
 }
-.login {
+.inputlogin {
   width: 95%;
   height: 30px;
 }
@@ -403,8 +434,7 @@ h2 {
   height: 25px;
 }
 .price {
-  padding-top: 36px;
-  margin-left: 35%;
+  margin-left: 160px;
 }
 .button {
   height: 25px;

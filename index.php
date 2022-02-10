@@ -1,6 +1,6 @@
 <?php
     include_once("connection.php");
-    if (isset($_POST['login'])){
+    if (isset($_POST['login'])){ 
         if (isset($_POST['username']) && !empty($_POST['username'])){
             if (isset($_POST['password']) && !empty($_POST['password'])){
                 if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
@@ -21,7 +21,8 @@
                             mysqli_stmt_close($stmt);
                             if(password_verify($password, $hash_password)){
                                 $_SESSION["loggedIn"] = true;
-                                $_SESSION["user_id"] = $user_id;
+                                $_SESSION["user_id"] = $userId;
+                                $_SESSION['auth_id'] = $authId;
                                 header("Location: homepage.php");
                             }
                         } else {
@@ -34,15 +35,15 @@
                     echo "<div class='alert-danger bold'>The username or password is incorrect, please try again.</div>";
                 }
             } else {
-                echo "<div class='alert-danger bold'>Please fill in a password</div>";
+                echo "<div class='alert-danger bold'>Please fill in a password.</div>";
             }
         } else {
-            echo "<div class='alert-danger bold'>Please fill in a username</div>";
+            echo "<div class='alert-danger bold'>Please fill in a username.</div>";
         }
     }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>
             NHL Webshop
@@ -55,9 +56,9 @@
             <h2>Login</h2>
             <form method="post">
                 <p>Username<br></p>
-                <input class="login" type="text" name="username">
+                <input class="inputlogin" type="text" name="username">
                 <p>Password<br></p>
-                <input class="login" type="password" name="password">
+                <input class="inputlogin" type="password" name="password">
                 <input class="buttonsmall noborder backblue white mb-1 mt-1 center pointer" type="submit" name="login" value="Login">
                 <a class="black nodec font-1" href="register.php">Register</a>
             </form>
