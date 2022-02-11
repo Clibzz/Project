@@ -1,3 +1,10 @@
+<?php 
+include_once("connection.php");
+session_start();
+if (!isset($_SESSION['user_id'])){
+    header("Location: index.php?message");
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,7 +12,7 @@
             NHL Webshop
         </title>
         <link rel="stylesheet" href="style.css">
-        <?php include_once("components/headerlogin.html"); ?>
+        <?php include_once("components/headerlogin.php"); ?>
     </head>
     <body>
         <div class="row flex">
