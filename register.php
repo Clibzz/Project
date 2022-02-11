@@ -24,6 +24,7 @@ if (isset($_POST['register'])){
                                     INSERT
                                     INTO user (
                                         user_id,
+                                        email,
                                         username,
                                         hash_password
                                     )
@@ -31,88 +32,37 @@ if (isset($_POST['register'])){
                                     (
                                         ?,
                                         ?,
+                                        ?,
                                         ?
                                     )
                                 ") or die(mysqli_error($conn));
-                                mysqli_stmt_bind_param($stmt, "iss", $user_id, $username, $hash_password);
+                                mysqli_stmt_bind_param($stmt, "isss", $user_id, $email, $username, $hash_password);
                                 mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
                                 mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
                                 mysqli_stmt_close($stmt);
-                                ?><div class="alert-success bold">Your account has been registered succesfully!</div><?php
+                                ?><div class="alert-success bold pt-1 pb-1 pl-1 nodec">Your account has been registered succesfully!</div><?php
                                 $accountCreated = true;
         
                             } else {
-                                echo "<div class='alert-danger bold'>This username has already been taken, please try again.</div>";
+                                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>This username has already been taken, please try again.</div>";
                             }
                         } else {
-                            echo "<div class='alert-danger bold'>Please refrain from using special characters in your password.</div>";
+                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your password.</div>";
                         }
                     } else {
-                        echo "<div class='alert-danger bold'>Please refrain from using special characters in your username.</div>";
+                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your username.</div>";
                     } 
                 } else {
-                    echo "<div class='alert-danger bold'>Please refrain from using special characters in your email address.</div>";
+                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your email address.</div>";
                 }
             } else {
-                echo "<div class='alert-danger bold'>Please fill in a password.</div>";
+                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a password.</div>";
             }
         } else {
-            echo "<div class='alert-danger bold'>Please fill in a username.</div>";
+            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a username.</div>";
         }
     } else {
-        echo "<div class='alert-danger bold'>Please fill in an email address.</div>";
-    }
-    if (!empty($_POST['username'])){
-        if (!empty($_POST['password'])){
-            if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                if ($password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-
-                    $hash_password = password_hash($password, PASSWORD_DEFAULT);
-
-                    $stmt = mysqli_prepare($conn, "
-                                        SELECT username
-                                        FROM user
-                                        WHERE username = ?
-                                    ") or die(mysqli_error($conn));
-                                    mysqli_stmt_bind_param($stmt, "s", $username);
-                                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                    mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                    if (mysqli_stmt_num_rows($stmt) == 0) {
-                        $stmt = mysqli_prepare($conn, "
-                            INSERT
-                            INTO user (
-                                user_id,
-                                username,
-                                hash_password
-                            )
-                            VALUES
-                            (
-                                ?,
-                                ?,
-                                ?
-                            )
-                        ") or die(mysqli_error($conn));
-                        mysqli_stmt_bind_param($stmt, "iss", $user_id, $username, $hash_password);
-                        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                        mysqli_stmt_close($stmt);
-                        ?><div class="alert-success bold">Your account has been registered succesfully!</div><?php
-                        $accountCreated = true;
-
-                    } else {
-                        echo "<div class='alert-danger bold'>This username has already been taken, please try again.</div>";
-                    }
-                } else {
-                    echo "<div class='alert-danger bold'>Please refrain from using special characters in your password.</div>";
-                }
-            } else {
-                echo "<div class='alert-danger bold'>Please refrain from using special characters in your username.</div>";
-            }
-        } else {
-            echo "<div class='alert-danger bold'>Please fill in a password</div>";
-        }
-    } else {
-        echo "<div class='alert-danger bold'>Please fill in a username</div>";
+        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in an email address.</div>";
     }
 }
 ?>
@@ -127,7 +77,7 @@ if (isset($_POST['register'])){
     </head>
     <body>
         <?php if($accountCreated == true) {
-            echo "<a href='index.php'><div class='backgray bold p1 black cursor'>Go back to the login page</div></a>";
+            echo "<a href='index.php'><div class='backgray bold pt-1 pb-1 pl-1 black cursor'>Go back to the login page</div></a>";
         } ?>
         <div class="loginbox mt-10 h40">
             <h2>Register</h2>
