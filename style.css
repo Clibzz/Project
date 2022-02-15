@@ -6,20 +6,15 @@ header {
   background-color: dodgerblue;
   color: white;
   display: flex;
-  width: 100%;
   height: 60px;
   font-size: 1.3em;
 }
-p {
-  padding-top: 20px;
-}
-a {
-  color: white;
-  cursor: pointer;
-}
 h2 {
-  padding-top: 15px;
   margin-right: 200px;
+}
+.table td,
+.table thead th {
+    border: 1px solid black;
 }
 
 /* Width */
@@ -49,12 +44,16 @@ h2 {
 .h60 {
   height: 60%;
 }
+.h65 {
+  height: 65%;
+}
 .h80 {
   height: 80%;
 }
 .h100 {
   height: 100%;
 }
+
 .border {
   border: 1px solid black;
 }
@@ -70,20 +69,80 @@ h2 {
 .font-1 {
   font-size: 0.8em;
 }
+.font-2 {
+  font-size: 1.05em;
+}
 .bold {
   font-weight: bold;
+}
+
+/* Display */
+.flex {
+  display: flex;
+}
+.block {
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.nodec {
+  text-decoration: none;
+}
+.box {
+  width: 30%;
+  height: 200px;
+}
+.row {
+    width: 60%;
+}
+.content {
+  margin-left: 20%;
+}
+.headertext {
+  width: 60%;
+}
+.hlabel {
+  padding-right: 170px;
+}
+.search {
+  height: 30px;
+  width: 280px;
+}
+.loginbox {
+  width: 25%;
+  border: 1px solid black;
+  padding-left: 0.8%;
+}
+.inputlogin {
+  width: 95%;
+  height: 30px;
+}
+.amount {
+  width: 40px;
+  height: 25px;
+}
+.price {
+  margin-left: 160px;
+}
+.button {
+  height: 25px;
+  width: 125px;
+}
+.buttonsmall {
+  height: 25px;
+  width: 75px;
 }
 
 /* Alerts */
 .alert-success {
   color: #1c9941;
   background-color: #d4edda;
-  padding: 10px;
 }
 .alert-danger {
   color: #dc3545;
   background-color: #f8d7da;
-  padding: 10px;
 }
 /* Background */
 .backgray {
@@ -387,60 +446,4 @@ h2 {
 .mb-10 {
   margin-bottom: 5rem;
 }
-/* Display */
-.flex {
-  display: flex;
-}
-.block {
-  display: block;
-}
-.pointer {
-  cursor: pointer;
-}
-.nodec {
-  text-decoration: none;
-}
-.box {
-  width: 200px;
-  height: 200px;
-}
-.row {
-    width: 60%;
-}
-.content {
-  margin-left: 20%;
-}
-.headertext {
-  width: 60%;
-}
-.hlabel {
-  padding-right: 225px;
-}
-.search {
-  height: 30px;
-  width: 280px;
-}
-.loginbox {
-  width: 25%;
-  border: 1px solid black;
-  padding-left: 0.8%;
-}
-.inputlogin {
-  width: 95%;
-  height: 30px;
-}
-.amount {
-  width: 40px;
-  height: 25px;
-}
-.price {
-  margin-left: 160px;
-}
-.button {
-  height: 25px;
-  width: 125px;
-}
-.buttonsmall {
-  height: 25px;
-  width: 75px;
-}
+
