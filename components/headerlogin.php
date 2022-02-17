@@ -21,8 +21,8 @@ $role_id = $_SESSION['role_id'];
             <input class="search mr-3" type="text" name="zoeken" placeholder="Zoeken">
             <?php
             if ($role_id == 1) {
-                ?><a class="pointer white" href="addInternUser.php"><span class="material-icons verticalmid ml-2 mr-2">manage_accounts</span></a>
-                <a class="pointer white" href="cart.php"><span class="material-icons ml-2 mr-2 verticalmid">shopping_cart</span></a>
+                ?><a class="pointer white" href="userList.php"><span class="material-icons verticalmid ml-3 mr-3">manage_accounts</span></a>
+                <a class="pointer white" href="cart.php"><span class="material-icons ml-3 mr-3 verticalmid">shopping_cart</span></a>
                 <button class="buttonsmall nobackground noborder white bold font-2 pointer ml-4" type="submit" name="logout">Logout</button><?php
             } else {
                 ?><a class="pointer white" href="cart.php"><span class="material-icons ml-8 mr-8 verticalmid">shopping_cart</span></a>
