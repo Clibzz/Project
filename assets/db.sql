@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 10 feb 2022 om 22:40
+-- Gegenereerd op: 18 feb 2022 om 10:02
 -- Serverversie: 10.4.20-MariaDB
 -- PHP-versie: 8.0.9
 
@@ -29,11 +29,55 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `image` varchar(100) NOT NULL,
-  `productname` varchar(50) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `price` float NOT NULL
+  `title` varchar(50) NOT NULL,
+  `amount` int(3) NOT NULL,
+  `price` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `user_id`, `image`, `title`, `amount`, `price`) VALUES
+(1, 1, '', 'iPhone', 4, 13.00);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `product`
+--
+
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL,
+  `title` varchar(25) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `category` varchar(15) NOT NULL,
+  `price` double(10,2) NOT NULL,
+  `image` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `roles`
+--
+
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
+  `name` varchar(15) NOT NULL,
+  `description` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `name`, `description`) VALUES
+(1, 'admin', 'Administrator of the webshop'),
+(2, 'orderpicker', 'The person who handles the orders'),
+(3, 'customer', 'A customer of the webshop');
 
 -- --------------------------------------------------------
 
@@ -43,24 +87,21 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `auth_id` int(5) NOT NULL,
+  `role_id` int(1) NOT NULL,
   `email` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `hash_password` varchar(255) NOT NULL
+  `hash_password` varchar(255) NOT NULL,
+  `birthdate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `user`
 --
 
-INSERT INTO `user` (`user_id`, `auth_id`, `email`, `username`, `hash_password`) VALUES
-(1, 0, '', 'Chris', '$2y$10$hnxQlEUDZbDrUHFOpjGHdOn8q/wAAs3VRgoH/GdInouqwmLuLu2zS'),
-(2, 0, '', 'abc', '$2y$10$e1XweoyUnKVpebQcqhO.wu9OUZKxegX0HVtSva6zcBdRSnKAIuHnm'),
-(3, 0, '123@321', '321', '$2y$10$uoyTQZ6V7VmtT9EvWXwCHew31Nf.7GScrNjKWJUftaPSfRarbF.tO'),
-(4, 0, 'test@a', 'test', '$2y$10$bheukFppASRYnUUWyistluaRveNkQBicMAuGL//Ht8.p6soRD1.am'),
-(5, 0, 'a@a', 'admin', '$2y$10$ox0NbnD4XDTj9mOl5oMCm.wAmeDEW4JeZYMGUDLf5/WWqGjALjjkK'),
-(6, 0, 'testing@a', 'abd', '$2y$10$BvLEOX/md91gjTAnXYLgYuN9wrT4g95Sx0FJUPUDzgnR.9XFBblQ2'),
-(7, 0, 'mnabszv@a', 'sfha', '$2y$10$tTFvR.r2rwns8bc9OuCb7e.gtzjsXpEhhzrsj/PDwcVDMyO0vdTwu');
+INSERT INTO `user` (`user_id`, `role_id`, `email`, `username`, `hash_password`, `birthdate`) VALUES
+(1, 1, 'chris.klunder@student.nhlstenden.com', 'admin', '$2y$10$FfvXx1Fkzh7WxB4bYADUbeAdFBTJVYk9MzHEaj9V4VYeXp9m1utpW', '2001-08-07'),
+(2, 3, 'chriscrossje2001@gmail.com', 'chris', '$2y$10$rAU2CQwMC0tmIreyUxnXjOJ777R8snsTooU9mqG/Safe3KmKm.pbW', '2022-02-01'),
+(3, 2, 'clibzzyt@gmail.com', 'orderpicker', '$2y$10$PwJ/hfE8BO7mtKzxs8GqeO5iSsZh64tiH6uhF1nB2JI.K5EW8QIYO', '1991-07-11');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -70,13 +111,29 @@ INSERT INTO `user` (`user_id`, `auth_id`, `email`, `username`, `hash_password`) 
 -- Indexen voor tabel `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`);
+  ADD PRIMARY KEY (`cart_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
+  ADD KEY `user_id_3` (`user_id`);
+
+--
+-- Indexen voor tabel `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexen voor tabel `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`);
 
 --
 -- Indexen voor tabel `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
@@ -86,13 +143,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT voor een tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT voor een tabel `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT voor een tabel `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
