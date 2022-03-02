@@ -18,7 +18,8 @@ if (isset($_GET['success'])) {
         <?php include_once("components/headerlogin.php"); ?>
     </head>
     <body>
-        <table class="table mt-6 w60">
+        <h1 class="w60 mt-4 mb-2">User List</h1>
+        <table class="table w60">
             <thead class="backblue white">
                 <tr>
                     <th>User_id</th>
@@ -38,12 +39,11 @@ if (isset($_GET['success'])) {
                 if (mysqli_stmt_execute($stmt)) {
                     mysqli_stmt_store_result($stmt);
                     mysqli_stmt_bind_result($stmt, $user_id, $role_id, $email, $username, $password, $birthdate);
-        
+
                     if (mysqli_stmt_num_rows($stmt) > 0) { 
-                            
                         while (mysqli_stmt_fetch($stmt)) { ?>
-                            <tr>
-                                <td><?php echo $user_id ?></td>
+                            <tr class="center">
+                                <td class="backblue white bold"><?php echo $user_id ?></td>
                                 <td><?php echo $role_id ?></td>
                                 <td><?php echo $email ?></td>
                                 <td><?php echo $username ?></td>
