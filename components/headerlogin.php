@@ -20,6 +20,7 @@ $role_id = $_SESSION['role_id'];
             <a class="nodec pointer white" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
             <input class="search mr-3" type="text" name="zoeken" placeholder="Zoeken">
         </form>
+        <form>
             <?php
             if ($role_id == 1) {
                 ?><a class="pointer white" href="userList.php"><span class="material-icons verticalmid ml-3 mr-3">manage_accounts</span></a>
