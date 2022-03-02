@@ -23,18 +23,16 @@ if (isset($_POST['update'])) {
                                         username = ?,
                                         birthdate = ?
                                     WHERE user_id = ?                                   
-                            ") OR DIE(mysqli_error($conn));
+                            ") or die(mysqli_error($conn));
                             mysqli_stmt_bind_param($stmt, 'isssi', $role_id, $email, $username, $birthdate, $user_id);
-                            if (mysqli_stmt_execute($stmt)) {
-                                mysqli_stmt_close($stmt);
-                                header("Location: userList.php?success");
-                                $editMade = true;
-                            } else {
-                                mysqli_error($conn);
-                            }
+                            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                            mysqli_stmt_close($stmt);
+                            header("Location: userList.php?success");
                         } else {
                             echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid birthdate.</div>";
                         }
+                    } else {
+                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the birthdate field.</div>";
                     }
                 } else {
                     echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the username field.</div>";
@@ -60,7 +58,6 @@ if (isset($_POST['update'])) {
     <body>
         <?php
             $user_id = $_GET['id'];
-
             $stmt = mysqli_prepare($conn, "
                     SELECT *
                     FROM user
@@ -76,7 +73,7 @@ if (isset($_POST['update'])) {
         <div class="flex">
             <h1 class="mt-4 w60">User Edit</h1>  
         </div>
-        <div class="row">
+        <div class="w60">
             <form method="post">
                 <p class="pt-2">User_id<br></p>
                 <input class="inputlogin" type="text" name="user_id" value=<?php echo $user_id ?> readonly>

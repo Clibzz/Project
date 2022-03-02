@@ -29,7 +29,7 @@
                                 $_SESSION['username'] = $username;
                                 $_SESSION['password'] = $password;
                                 $_SESSION['birthdate'] = $birthdate;
-                                header ("Location: homepage.php");
+                                header ("Location: homepage.php?home");
                             } else {
                                 echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
                             }

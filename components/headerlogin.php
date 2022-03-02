@@ -11,24 +11,34 @@ $stmt = mysqli_prepare($conn, "
     WHERE user_id = ?
 ") or die(mysqli_error($conn));
 $role_id = $_SESSION['role_id'];
+$user_id = $_SESSION['user_id'];
 ?>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<header class="w100">
-    <div class="headertext">
+<header class="backblue">
+    <div class="w60 flex">
         <form method="post">
-            <a class="nodec pointer white" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
-            <input class="search mr-3" type="text" name="zoeken" placeholder="Zoeken">
+            <a class="nodec pointer white mr-0" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
+            <input class="search ml-5 mr-10" type="text" name="zoeken" placeholder="Zoeken">
+        </form>
             <?php
-            if ($role_id == 1) {
-                ?><a class="pointer white" href="userList.php"><span class="material-icons verticalmid ml-3 mr-3">manage_accounts</span></a>
+            if ($role_id == 1) {?>
+                <a class="pointer white" href="userList.php"><span class="material-icons verticalmid ml-3 mr-3">manage_accounts</span></a>
                 <a class="pointer white" href="cart.php"><span class="material-icons ml-3 mr-3 verticalmid">shopping_cart</span></a>
-                <button class="buttonsmall nobackground noborder white bold font-2 pointer ml-4" type="submit" name="logout">Logout</button><?php
+                <form method="post">
+                    <button class="buttonsmall nobackground noborder white bold font-2 pointer ml-3" type="submit" name="logout">Logout</button>
+                </form>
+            <?php
             } else {
-                ?><a class="pointer white" href="cart.php"><span class="material-icons ml-8 mr-8 verticalmid">shopping_cart</span></a>
-                <button class="buttonsmall nobackground noborder white bold font-2 pointer" type="submit" name="logout">Logout</button><?php
-            } ?>
-            
+            ?>
+                <a class="pointer white" href="cart.php"><span class="material-icons ml-8 mr-8 verticalmid">shopping_cart</span></a>
+                <form method="post">
+                    <button class="buttonsmall nobackground noborder white bold font-2 pointer" type="submit" name="logout">Logout</button>
+                </form>
+            <?php
+            }
+            ?>
+
         </form>
     </div>
 </header>
