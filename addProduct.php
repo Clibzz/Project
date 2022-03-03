@@ -15,18 +15,18 @@ if (isset($_POST['addproduct'])) {
                             if ($description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
                                 if ($category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
                                     $price = str_replace(",", ".", $_POST["price"]);
-                                    if ($agelimit = filter_input(INPUT_POST, "agelimit")) {
-                                        if ($price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)) {
-                                            if (!empty($_FILES['uploaded_file'])) {
-                                                $path = "./images/";
-                                                $path = $path . basename($_FILES['uploaded_file']['name']);
-                                                $fileTypes = ["image/png", "image/jpeg", "image/jpg"];
-                                                $uploadedFileType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['uploaded_file']['tmp_name']);
-                                                if (in_array($uploadedFileType, $fileTypes)) {
-                                                    if ($_FILES['uploaded_file']['size'] < 3000001) {
-                                                        if (file_exists("images/" . $_FILES['uploaded_file']['name'])) {
-                                                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>There already exists a file with that name, please try again.</div>";
-                                                        } else {
+                                    if ($price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)) {
+                                        if ($agelimit = filter_input(INPUT_POST, "agelimit")) {
+                                        if (!empty($_FILES['uploaded_file'])) {
+                                            $path = "./images/";
+                                            $path = $path . basename($_FILES['uploaded_file']['name']);
+                                            $fileTypes = ["image/png", "image/jpeg", "image/jpg"];
+                                            $uploadedFileType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['uploaded_file']['tmp_name']);
+                                            if (in_array($uploadedFileType, $fileTypes)) {
+                                                if ($_FILES['uploaded_file']['size'] < 3000001) {
+                                                    if (file_exists("images/" . $_FILES['uploaded_file']['name'])) {
+                                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>There already exists a file with that name, please try again.</div>";
+                                                    } else {
                                                             move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path);
                                                             echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been added succesfully.</div>";
                                                             $stmt = mysqli_prepare($conn, "
@@ -36,9 +36,9 @@ if (isset($_POST['addproduct'])) {
                                                                 title,
                                                                 description,
                                                                 category,
-                                                                agelimit,
                                                                 price,
-                                                                image
+                                                                image,
+                                                                agelimit
                                                                 )
                                                                 VALUES (
                                                                     ?,
@@ -51,7 +51,7 @@ if (isset($_POST['addproduct'])) {
                                                                     )
                                                             ") or die(mysqli_error($conn));
 
-                                                            mysqli_stmt_bind_param($stmt, 'issssds', $product_id, $title, $description, $category, $agelimit, $price, $_FILES['uploaded_file']['name']);
+                                                            mysqli_stmt_bind_param($stmt, 'isssdss', $product_id, $title, $description, $category, $price, $_FILES['uploaded_file']['name'], $agelimit);
                                                             if (mysqli_stmt_execute($stmt)) {
                                                                 mysqli_stmt_close($stmt);
                                                             }
