@@ -15,57 +15,61 @@ if (isset($_POST['addproduct'])) {
                             if ($description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
                                 if ($category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
                                     $price = str_replace(",", ".", $_POST["price"]);
-                                    if ($price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)) {
-                                        if (!empty($_FILES['uploaded_file'])) {
-                                            $path = "./images/";
-                                            $path = $path . basename($_FILES['uploaded_file']['name']);
-                                            $fileTypes = ["image/png", "image/jpeg", "image/jpg"];
-                                            $uploadedFileType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['uploaded_file']['tmp_name']);
-                                            if (in_array($uploadedFileType, $fileTypes)) {
-                                                if ($_FILES['uploaded_file']['size'] < 3000001) {
-                                                    if (file_exists("images/" . $_FILES['uploaded_file']['name'])) {
-                                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>There already exists a file with that name, please try again.</div>";
-                                                    } else {
-                                                        move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path);
-                                                        echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been added succesfully.</div>";
-                                                        $stmt = mysqli_prepare($conn, "
-                                                        INSERT
-                                                        INTO product (
-                                                            product_id,
-                                                            title,
-                                                            description,
-                                                            category,
-                                                            agelimit,
-                                                            price,
-                                                            image
-                                                            )
-                                                            VALUES (
-                                                                ?,
-                                                                ?,
-                                                                ?,
-                                                                ?,
-                                                                ?,
-                                                                ?,
-                                                                ?
+                                    if ($agelimit = filter_input(INPUT_POST, "agelimit")) {
+                                        if ($price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)) {
+                                            if (!empty($_FILES['uploaded_file'])) {
+                                                $path = "./images/";
+                                                $path = $path . basename($_FILES['uploaded_file']['name']);
+                                                $fileTypes = ["image/png", "image/jpeg", "image/jpg"];
+                                                $uploadedFileType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['uploaded_file']['tmp_name']);
+                                                if (in_array($uploadedFileType, $fileTypes)) {
+                                                    if ($_FILES['uploaded_file']['size'] < 3000001) {
+                                                        if (file_exists("images/" . $_FILES['uploaded_file']['name'])) {
+                                                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>There already exists a file with that name, please try again.</div>";
+                                                        } else {
+                                                            move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path);
+                                                            echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been added succesfully.</div>";
+                                                            $stmt = mysqli_prepare($conn, "
+                                                            INSERT
+                                                            INTO product (
+                                                                product_id,
+                                                                title,
+                                                                description,
+                                                                category,
+                                                                agelimit,
+                                                                price,
+                                                                image
                                                                 )
-                                                        ") or die(mysqli_error($conn));
+                                                                VALUES (
+                                                                    ?,
+                                                                    ?,
+                                                                    ?,
+                                                                    ?,
+                                                                    ?,
+                                                                    ?,
+                                                                    ?
+                                                                    )
+                                                            ") or die(mysqli_error($conn));
 
-                                                        mysqli_stmt_bind_param($stmt, 'issssds', $product_id, $title, $description,$agelimit, $category, $price, $_FILES['uploaded_file']['name']);
-                                                        if (mysqli_stmt_execute($stmt)) {
-                                                            mysqli_stmt_close($stmt);
+                                                            mysqli_stmt_bind_param($stmt, 'issssds', $product_id, $title, $description, $category, $agelimit, $price, $_FILES['uploaded_file']['name']);
+                                                            if (mysqli_stmt_execute($stmt)) {
+                                                                mysqli_stmt_close($stmt);
+                                                            }
                                                         }
+                                                    } else {
+                                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The size of the file is too big, please select a file that's below 5MB.</div>";
                                                     }
                                                 } else {
-                                                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The size of the file is too big, please select a file that's below 5MB.</div>";
+                                                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The file is not the right type, you can only upload PNG, JPEG, JPG or GIF files.</div>";
                                                 }
                                             } else {
-                                                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The file is not the right type, you can only upload PNG, JPEG, JPG or GIF files.</div>";
+                                                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please select a file to continue.</div>";
                                             }
                                         } else {
-                                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please select a file to continue.</div>";
+                                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid price.</div>";
                                         }
                                     } else {
-                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid price.</div>";
+                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid agelimit.</div>";
                                     }
                                 } else {
                                     echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid category.1</div>";
