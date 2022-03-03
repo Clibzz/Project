@@ -69,9 +69,7 @@ if (isset($_POST['addproduct'])) {
             } else {
                 echo "<div class='w60 mt-2 alert-danger bold pt-1 pb-1'>&nbsp;0 results</div>";
             }
-        }
-
-        if (isset($_POST['computers'])){
+        } elseif (isset($_POST['computers'])){
             $stmt = mysqli_prepare($conn, "
             SELECT *
             FROM product
@@ -98,9 +96,7 @@ if (isset($_POST['addproduct'])) {
             } else {
                 echo "<div class='w60 mt-2 alert-danger bold pt-1 pb-1'>&nbsp;0 results</div>";
             }
-        }
-
-        if (isset($_POST['components'])){
+        } elseif (isset($_POST['components'])){
             $stmt = mysqli_prepare($conn, "
             SELECT *
             FROM product
@@ -127,9 +123,7 @@ if (isset($_POST['addproduct'])) {
             } else {
                 echo "<div class='w60 mt-2 alert-danger bold pt-1 pb-1'>&nbsp;0 results</div>";
             }
-        }
-
-        if (isset($_POST['smartwatches'])){
+        } elseif (isset($_POST['smartwatches'])){
             $stmt = mysqli_prepare($conn, "
             SELECT *
             FROM product
@@ -156,9 +150,7 @@ if (isset($_POST['addproduct'])) {
             } else {
                 echo "<div class='w60 mt-2 alert-danger bold pt-1 pb-1'>&nbsp;0 results</div>";
             }
-        }
-
-        if (isset($_POST['smarthome'])){
+        } elseif (isset($_POST['smarthome'])){
             $stmt = mysqli_prepare($conn, "
             SELECT *
             FROM product
@@ -179,6 +171,34 @@ if (isset($_POST['addproduct'])) {
                             </form>
                         </div>
                     </div>
+                        <?php
+                    }?>
+                </div><?php
+            } else {
+                echo "<div class='w60 mt-2 alert-danger bold pt-1 pb-1'>&nbsp;0 results</div>";
+            }
+        } else {
+            $stmt = mysqli_prepare($conn, "
+            SELECT *
+            FROM product
+            ") or die(mysqli_error($conn));
+            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+            mysqli_stmt_store_result($stmt);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            if (mysqli_stmt_num_rows($stmt) > 0) { 
+                ?> <div class="flex borderridge w60 overflow"><?php
+                    while (mysqli_stmt_fetch($stmt)) { ?>
+                        <a class="black nodec center" href="productpage.php?id=<?php echo $product_id ?>">
+                            <div class="">
+                                <div class="flex">
+                                    <form class="border" method="post">  
+                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
+                                        <img class="h100 imagehome center borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
+                                    </form>
+                                </div>
+                            </div>
+                        </a>
                         <?php
                     }?>
                 </div><?php

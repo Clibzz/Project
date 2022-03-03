@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <div class="row flex">
+    <div class="w60 flex">
         <div class="flex ml-0 center block mb-2 mr-2">
             <img src="images/iphone13.png" alt="iPhone 13">
             <h2 class="flex m-auto">iPhone 13</h2>
@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
              Curabitur nec erat eros. Mauris id velit faucibus, egestas dolor sit amet, auctor orci. Aliquam vulputate, turpis nec maximus facilisis, ante nisi rhoncus ligula, sed sodales leo arcu at quam. Duis nec tortor commodo, elementum ligula at, rhoncus dui.</p>
         </div>
     </div>
-    <div class="row flex">
+    <div class="w60 flex">
         <img src="images/iphone13.png" alt="Iphone 13">
         <img src="images/iphone13.png" alt="Iphone 13">
         <img src="images/iphone13.png" alt="Iphone 13">

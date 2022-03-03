@@ -99,6 +99,7 @@
                                 <form method="post">
                                     <input type="hidden" name="cart_id" value=<?php echo $cart_id ?>>
                                     <input type="hidden" name="user_id" value=<?php echo $user_id ?>>
+                                    <input type="hidden" name="product_id" value=<?php echo $product_id?>>
                                     <td class="w20 h30"><img class="w30 h20" src="images/<?php echo $image ?>"></td>
                                     <td><a class="black nodec center" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
                                     <td><input class="center buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
