@@ -18,8 +18,8 @@ $user_id = $_SESSION['user_id'];
 <header class="backblue">
     <div class="w60 flex">
         <form method="post">
-            <a class="nodec pointer white mr-0" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
-            <input class="search ml-5 mr-10" type="text" name="zoeken" placeholder="Zoeken">
+            <a class="nodec pointer white mr-3" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
+            <input class="search" type="text" name="zoeken" placeholder="Zoeken">
         </form>
             <?php
             if ($role_id == 1) {?>
