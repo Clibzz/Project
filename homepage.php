@@ -48,7 +48,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
@@ -77,7 +77,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
@@ -104,7 +104,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
@@ -131,7 +131,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
@@ -158,7 +158,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
@@ -184,7 +184,7 @@ if (isset($_POST['addproduct'])) {
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $agelimit, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
                 ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
