@@ -119,7 +119,7 @@ if (isset($_POST['register'])){
                 <input class="inputlogin" type="password" name="password">
                 <p class="pt-5">Birthdate<br></p>
                 <input class="inputlogin" type="date" name="birthdate" max="9999-12-31">
-                <input class="nodec mt-2 mb-2 backblue noborder button pointer center white" type="submit" name="register" value="Register">
+                <input class="nodec mt-2 mb-2 backblue noborder button pointer textcenter white" type="submit" name="register" value="Register">
                 <a class="black nodec font-1 pointer" href="index.php">Back to login</a>
             </form>
         </div>

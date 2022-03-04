@@ -21,7 +21,7 @@ if (isset($_POST['addproduct'])) {
     </head>
     <body>
         <div class="w60">
-            <h2 class="mt-4 font-2"><b>Select one of the following categories</b></h2>
+            <h2 class="pt-4 font-2"><b>Select one of the following categories</b></h2>
             <form method="post" class="pt-2 font-3">
                 <input type="submit" class="blue pointer nobackground noborder font-2" value="Phones" name="phones"> - <input type="submit" class="blue pointer nobackground noborder font-2" value="Computers" name="computers" > - <input type="submit" class="blue pointer nobackground noborder font-2" value="Components" name="components"> - <input type="submit" class="blue pointer nobackground noborder font-2" value="Smart Watches" name="smartwatches"> - <input type="submit" class="blue pointer nobackground noborder font-2 mb-3" value="Smart Home" name="smarthome">
             </form>
@@ -29,7 +29,7 @@ if (isset($_POST['addproduct'])) {
         <?php 
         if ($role_id == 1) {?>
             <div class="flex">
-               <h1 class="mt-4 pl-3 left">Found products</h1>
+               <h1 class="mt-4 pl-4 left">Found products</h1>
                <form method="post">
                     <input class="button pointer white noborder backblue mt-6 ml-0 mb-2 right mr-4" type="submit" name="addproduct" value="Add Product">
                 </form>
@@ -39,29 +39,31 @@ if (isset($_POST['addproduct'])) {
                 <h1 class="mt-4 mb-2 ml-0">Found products</h1>
             </div><?php
         }
+
         if (isset($_POST['phones'])){
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    WHERE category = 'phones'
+            SELECT *
+            FROM product
+            WHERE category = 'phones'
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
                         <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
+                            <div class="">
+                                <div class="flex">
                                     <form class="border" method="post">  
                                         <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter backwhite borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
+                                        <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
                                     </form>
                                 </div>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -69,27 +71,26 @@ if (isset($_POST['addproduct'])) {
             }
         } elseif (isset($_POST['computers'])){
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    WHERE category = 'computers'
+            SELECT *
+            FROM product
+            WHERE category = 'computers'
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="border" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
-                            </div>
-                        </a><?php
+                    <div class="">
+                        <div class="flex">
+                            <form class="border" method="post">  
+                                <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
+                                <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
+                            </form>
+                        </div>
+                    </div>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -97,27 +98,26 @@ if (isset($_POST['addproduct'])) {
             }
         } elseif (isset($_POST['components'])){
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    WHERE category = 'components'
+            SELECT *
+            FROM product
+            WHERE category = 'components'
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="border" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
-                            </div>
-                        </a><?php
+                    <div class="">
+                        <div class="flex">
+                            <form class="border" method="post">  
+                                <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
+                                <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
+                            </form>
+                        </div>
+                    </div>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -125,27 +125,26 @@ if (isset($_POST['addproduct'])) {
             }
         } elseif (isset($_POST['smartwatches'])){
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    WHERE category = 'smartwatches'
+            SELECT *
+            FROM product
+            WHERE category = 'smartwatches'
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="border" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
-                            </div>
-                        </a><?php
+                    <div class="">
+                        <div class="flex">
+                            <form class="border" method="post">  
+                                <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
+                                <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
+                            </form>
+                        </div>
+                    </div>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -153,27 +152,26 @@ if (isset($_POST['addproduct'])) {
             }
         } elseif (isset($_POST['smarthome'])){
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    WHERE category = 'smarthome'
+            SELECT *
+            FROM product
+            WHERE category = 'smarthome'
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="border" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
-                            </div>
-                        </a><?php
+                    <div class="">
+                        <div class="flex">
+                            <form class="border" method="post">  
+                                <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
+                                <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
+                                <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
+                            </form>
+                        </div>
+                    </div>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -181,26 +179,27 @@ if (isset($_POST['addproduct'])) {
             }
         } else {
             $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
+            SELECT *
+            FROM product
             ") or die(mysqli_error($conn));
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt);
-            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
+            mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex backgray borderridge w60 overflow"><?php
+                ?> <div class="flex borderridge w60 overflow"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
                         <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
+                            <div class="">
+                                <div class="flex">
                                     <form class="border" method="post">  
                                         <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
                                         <img class="h100 imagehome textcenter borderbottom" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b></div>"?>
+                                        <?php echo "<div class='block'><b>&euro;&nbsp;" . $price . "</b><div>"?>
                                     </form>
                                 </div>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {

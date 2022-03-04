@@ -1,9 +1,45 @@
 <?php
-include_once("connection.php");
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php?message");
-}   
+    session_start();
+    include_once("connection.php"); 
+
+    if (!isset($_SESSION['user_id'])){
+        header("Location: index.php?message");
+    }
+    
+    if (isset($_POST['overview'])) {
+        header("Location: overview.php");
+    }
+   
+    
+    if (isset($_POST['delete'])) {
+        if ($cart_id = filter_input(INPUT_POST, 'delete', FILTER_SANITIZE_NUMBER_INT)) { 
+            $delstmt = mysqli_prepare($conn, "
+                    DELETE 
+                    FROM    cart
+                    WHERE   cart_id = ?
+            ") or die(mysqli_error($conn));
+            mysqli_stmt_bind_param($delstmt, "i", $cart_id);
+            mysqli_stmt_execute($delstmt) or die(mysqli_error($conn));
+            mysqli_stmt_close($delstmt); 
+        } 
+    }
+    
+    if (isset($_POST['update'])) {
+        if ($amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_INT)){
+            if ($cart_id = filter_input(INPUT_POST, 'cart_id', FILTER_SANITIZE_NUMBER_INT)) {
+                $stmt = mysqli_prepare($conn, "
+                        UPDATE cart
+                        SET amount = ?
+                        WHERE cart_id = ?                                
+                ") or die(mysqli_error($conn));
+                mysqli_stmt_bind_param($stmt, 'ii', $amount, $cart_id);
+                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                mysqli_stmt_close($stmt);     
+            }
+        } else {
+            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the amount field.</div>";
+        }
+    }       
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,48 +51,76 @@ if (!isset($_SESSION['user_id'])) {
         <?php include_once("components/headerlogin.php"); ?>
     </head>
     <body>
-        <h1 class="content mt-6 mb-0.5">Your cart</h1>
-        <div class="row mb-1 backgray">
-                <div class="imgcart flex ml-1.5 pb-1">
-                    <img src="images/iphone13.png" alt="iPhone13">
-                    <h2>iPhone 13</h2>
-                    <p class="amount flex mb-2 ml-1 pr-1 bold">Amount</p>
-                    <input class="amount flex ml-1 number mb-2" type="text" name="amount">
-                    <label class="mb-3 bold pt-5 ml-10">&euro; &nbsp; <?php echo 32 . "," . 98; ?></label>
-                    <label name="cancel" class="red pointer bold pt-2">X</label>
-                </div>
+        <?php
+        if ($role_id == 2) {?>
+            <div class="flex w60 mb-0 mt-4 mb-2">
+                <h1 class="left ml-0">Your cart</h1>
+                <a class="right mr-0" href="overview.php"><input class="button pointer white noborder backblue" type="submit" name="overview" value="Order Overview"></a>
+            </div><?php
+        } else { ?>
+            <div class="flex w60 mb-0 mt-4 mb-2">
+                <h1 class="left ml-0">Your cart</h1>
+            </div><?php
+        } ?>
+        <form method="post">
+            <table class="w60 borderridge mb-2">
+                <thead class="backblue white">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $stmt = mysqli_prepare($conn, "
+                            SELECT *
+                            FROM cart
+                            WHERE user_id = ?
+                    ") or die(mysqli_error($conn));
+                    mysqli_stmt_bind_param($stmt, "i", $user_id);
+                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                    mysqli_stmt_store_result($stmt);
+                    mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $product_id, $image, $title, $amount, $price);
+                    if (mysqli_stmt_num_rows($stmt) > 0) { 
+                        while (mysqli_stmt_fetch($stmt)) { ?>
+                            <tr class="textcenter backgray">
+                                <form method="post">
+                                    <input type="hidden" name="cart_id" value=<?php echo $cart_id ?>>
+                                    <input type="hidden" name="user_id" value=<?php echo $user_id ?>>
+                                    <td class="w20 h30"><img class="w30 h30 backwhite mt-1 mb-1" src="images/<?php echo $image ?>"></td>
+                                    <td><a class="blue textcenter" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
+                                    <td><input class="textcenter buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
+                                    <td><?php echo "&euro;&nbsp;" . $price * $amount?></td>
+                                    <td><button class="pointer backblue noborder buttonsmall white" type="submit" name="update">Update</button></td>
+                                    <td><button class="pointer backblue white noborder buttonsmall" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer backblue noborder buttonsmall white">Delete</button></td>
+                                </form>
+                            </tr><?php
+                        }
+                    } else {
+                        echo "<div class='alert-danger bold pt-1 pb-1 w60'>Your cart doesn't contain any products, please add some products to your shopping cart.</div>";
+                        mysqli_stmt_close($stmt);
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </form>
+        <?php
+
+            
+        ?>
+        <div class="w60 mb-1">
+            <div class="right">
+                <form class="" method="post">
+                    <p class="pointer right nobackground bold  w100 borderridge mb-2 textcenter " type="text" name="total">Total price:<br>&euro;&nbsp;<?php  ?></button>
+                </form> 
+                <form class="" method="post">
+                    <button class="pointer right backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>
+                </form> 
             </div>
-            <div class="row mb-1 backgray">
-                <div class="imgcart flex ml-1.5 pb-1">
-                    <img src="images/iphone13.png" alt="iPhone13">
-                    <h2>iPhone 13</h2>
-                    <p class="amount flex mb-2 ml-1 pr-1 bold">Amount</p>
-                    <input class="amount flex ml-1 number mb-2" type="text" name="amount">
-                    <label class="mb-3 bold pt-5 ml-10">&euro; &nbsp; <?php echo 32 . "," . 98; ?></label>
-                    <label name="cancel" class="red pointer bold pt-2">X</label>
-                </div>
-            </div>
-            <div class="row mb-1 backgray">
-                <div class="imgcart flex ml-1.5 pb-1">
-                    <img src="images/iphone13.png" alt="iPhone13">
-                    <h2>iPhone 13</h2>
-                    <p class="amount flex mb-2 ml-1 pr-1 bold">Amount</p>
-                    <input class="amount flex ml-1 number mb-2" type="text" name="amount">
-                    <label class="mb-3 bold pt-5 ml-10">&euro; &nbsp; <?php echo 32 . "," . 98; ?></label>
-                    <label name="cancel" class="red pointer bold pt-2">X</label>
-                </div>
-            </div>
-            <div class="row mb-1">
-                <div class="right">
-                    <p class="total ml-1 right mb-3 bold">Total &nbsp; &euro; &nbsp; <?php echo 230 . "," . 24; ?></p>
-                    <form method="post">
-                        <input class="button pointer white noborder backgreen ml-1 right" type="submit" name="checkout" value="Checkout">
-                        <input class="button pointer white noborder backblue right" type="submit" name="update" value="Update">
-                    </form>
-                </div>
-            </div>    
+        </div>
     </body>
 </html>
-    
-
-

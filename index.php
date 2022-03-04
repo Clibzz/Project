@@ -29,7 +29,7 @@
                                 $_SESSION['username'] = $username;
                                 $_SESSION['password'] = $password;
                                 $_SESSION['birthdate'] = $birthdate;
-                                header ("Location: homepage.php");
+                                header ("Location: homepage.php?home");
                             } else {
                                 echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
                             }
@@ -67,7 +67,7 @@
                 <input class="inputlogin" type="text" name="username">
                 <p class="pt-5">Password<br></p>
                 <input class="inputlogin" type="password" name="password">
-                <input class="buttonsmall noborder backblue white mb-1 mt-1 center pointer" type="submit" name="login" value="Login">
+                <input class="buttonsmall noborder backblue white mb-1 mt-1 textcenter pointer" type="submit" name="login" value="Login">
                 <a class="black nodec font-1 pointer" href="register.php">Register</a>
             </form>
         </div>
