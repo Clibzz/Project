@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 03 mrt 2022 om 11:45
+-- Gegenereerd op: 04 mrt 2022 om 18:28
 -- Serverversie: 10.4.20-MariaDB
 -- PHP-versie: 8.0.9
 
@@ -30,10 +30,37 @@ SET time_zone = "+00:00";
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `image` varchar(100) NOT NULL,
   `title` varchar(50) NOT NULL,
   `amount` int(3) NOT NULL,
   `price` double(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `user_id`, `product_id`, `image`, `title`, `amount`, `price`) VALUES
+(3, 1, 4, 'nokiag300.jpg', 'Nokia G-300', 1, 299.99),
+(5, 1, 2, 'iphone12.png', 'iPhone 12 Pro Max', 1, 199.99),
+(6, 1, 10, 'smartwatch.jpg', 'Smart Watch', 1, 29.99);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `overview`
+--
+
+CREATE TABLE `overview` (
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `title` varchar(25) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `category` varchar(15) NOT NULL,
+  `price` double(10,2) NOT NULL,
+  `image` varchar(250) NOT NULL,
+  `agelimit` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -45,7 +72,7 @@ CREATE TABLE `cart` (
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `title` varchar(25) NOT NULL,
-  `description` varchar(250) NOT NULL,
+  `description` varchar(500) NOT NULL,
   `category` varchar(15) NOT NULL,
   `price` double(10,2) NOT NULL,
   `image` varchar(250) NOT NULL,
@@ -57,9 +84,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `title`, `description`, `category`, `price`, `image`, `agelimit`) VALUES
-(6, 'jan', 'jan', 'Phones', 1232.00, '403-you-shall-not-pass.jpg', ''),
-(7, '23213', '23213', 'Computers', 42123.00, 'clapboard-upload-movie.png', ''),
-(8, 'halloman', 'manhallo', 'Phones', 12.00, 'apple.jfif', '18+');
+(1, 'Motorola', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Phones', 299.99, 'motorola.jpg', 'Nolimit'),
+(2, 'iPhone 12 Pro Max', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Phones', 199.99, 'iphone12.png', 'Nolimit'),
+(3, 'Motorola', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Phones', 249.99, 'motorolaphone.jfif', '18+'),
+(4, 'Nokia G-300', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Phones', 299.99, 'nokiag300.jpg', 'Nolimit'),
+(5, 'Gaming Desktop', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Computers', 599.99, 'gamingpc.jpg', '18+'),
+(6, 'Gaming Setup', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Computers', 799.99, 'fierce-exile-gaming-pc-desktop-computer.jpg', 'Nolimit'),
+(7, 'Gaming Setup', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Computers', 999.99, 'setup.jpg', '18+'),
+(8, 'Ram Memory', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Components', 69.99, 'ram.jpg', 'Nolimit'),
+(9, 'Processor i9 Core', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'Components', 689.99, 'i9core.jpg', 'Nolimit'),
+(10, 'Smart Watch', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.', 'SmartWatches', 29.99, 'smartwatch.jpg', '18+');
 
 -- --------------------------------------------------------
 
@@ -115,10 +149,7 @@ INSERT INTO `user` (`user_id`, `role_id`, `email`, `username`, `hash_password`, 
 -- Indexen voor tabel `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
-  ADD UNIQUE KEY `user_id_2` (`user_id`),
-  ADD KEY `user_id_3` (`user_id`);
+  ADD PRIMARY KEY (`cart_id`);
 
 --
 -- Indexen voor tabel `product`
@@ -147,13 +178,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT voor een tabel `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT voor een tabel `roles`
