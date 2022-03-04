@@ -39,10 +39,7 @@
         } else {
             echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the amount field.</div>";
         }
-    }           
-
-    
-
+    }       
 ?>
 <!DOCTYPE html>
 <html lang="en">
