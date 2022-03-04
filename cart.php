@@ -39,7 +39,10 @@
         } else {
             echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the amount field.</div>";
         }
-    }
+    }           
+
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +66,7 @@
             </div><?php
         } ?>
         <form method="post">
-            <table class="w60 borderridge">
+            <table class="w60 borderridge mb-2">
                 <thead class="backblue white">
                     <tr>
                         <th>Image</th>
@@ -77,32 +80,23 @@
                 <tbody>
                     <?php
                     $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM product
-                    ") or die(mysqli_error($conn));
-                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                    mysqli_stmt_store_result($stmt);
-                    mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image);
-                    mysqli_stmt_close($stmt);
-                    $stmt = mysqli_prepare($conn, "
-                    SELECT *
-                    FROM cart
-                    WHERE user_id = ?
+                            SELECT *
+                            FROM cart
+                            WHERE user_id = ?
                     ") or die(mysqli_error($conn));
                     mysqli_stmt_bind_param($stmt, "i", $user_id);
                     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
                     mysqli_stmt_store_result($stmt);
-                    mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $image, $title, $amount, $price);
+                    mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $product_id, $image, $title, $amount, $price);
                     if (mysqli_stmt_num_rows($stmt) > 0) { 
                         while (mysqli_stmt_fetch($stmt)) { ?>
-                            <tr class="center backgray">
+                            <tr class="textcenter backgray">
                                 <form method="post">
                                     <input type="hidden" name="cart_id" value=<?php echo $cart_id ?>>
                                     <input type="hidden" name="user_id" value=<?php echo $user_id ?>>
-                                    <input type="hidden" name="product_id" value=<?php echo $product_id?>>
-                                    <td class="w20 h30"><img class="w30 h20" src="images/<?php echo $image ?>"></td>
-                                    <td><a class="black nodec center" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
-                                    <td><input class="center buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
+                                    <td class="w20 h30"><img class="w30 h30 backwhite mt-1 mb-1" src="images/<?php echo $image ?>"></td>
+                                    <td><a class="blue textcenter" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
+                                    <td><input class="textcenter buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
                                     <td><?php echo "&euro;&nbsp;" . $price * $amount?></td>
                                     <td><button class="pointer backblue noborder buttonsmall white" type="submit" name="update">Update</button></td>
                                     <td><button class="pointer backblue white noborder buttonsmall" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer backblue noborder buttonsmall white">Delete</button></td>
@@ -117,9 +111,19 @@
                 </tbody>
             </table>
         </form>
+        <?php
+
+            
+        ?>
+        <div class="w60 mb-1">
+            <div class="right">
+                <form class="" method="post">
+                    <p class="pointer right nobackground bold  w100 borderridge mb-2 textcenter " type="text" name="total">Total price:<br>&euro;&nbsp;<?php  ?></button>
+                </form> 
+                <form class="" method="post">
+                    <button class="pointer right backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>
+                </form> 
+            </div>
+        </div>
     </body>
 </html>
-
-
-
-

@@ -85,7 +85,7 @@ if (isset($_POST['update'])) {
                 <input class="inputlogin" type="text" name="username" value=<?php echo $username ?>>
                 <p class="pt-2">Birthdate (year, month, day)<br></p>
                 <input class="inputlogin" type="text" name="birthdate" max="9999-12-31" value=<?php echo $birthdate ?>>
-                <button class="nodec mt-2 mb-2 backblue noborder button pointer center white" name="update">Update</button>
+                <button class="nodec mt-2 mb-2 backblue noborder button pointer textcenter white" name="update">Update</button>
             </form>
         </div>
     </body>

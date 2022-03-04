@@ -5,6 +5,7 @@ if(isset($_POST['logout'])){
     header("Location: index.php");
     print_r($_SESSION);
 }
+
 $stmt = mysqli_prepare($conn, "
     SELECT *
     FROM user
@@ -18,15 +19,17 @@ $user_id = $_SESSION['user_id'];
 <header class="backblue">
     <div class="w60 flex">
         <form method="post">
-            <a class="nodec pointer white mr-3" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
-            <input class="search mr-5" type="text" name="zoeken" placeholder="Zoeken">
+            <a class="nodec pointer white mr-0" href="homepage.php"><label class="button pointer nobackground hlabel"><b>NHL WEBSHOP</b></label></a>
+        </form>
+        <form method="post">
+            <input class="search mr-5" type="text" name="search" placeholder="Zoeken">
         </form>
             <?php
             if ($role_id == 1) {?>
                 <a class="pointer white" href="userList.php"><span class="material-icons verticalmid ml-3 mr-3">manage_accounts</span></a>
                 <a class="pointer white" href="cart.php"><span class="material-icons ml-3 mr-3 verticalmid">shopping_cart</span></a>
                 <form method="post">
-                    <button class="buttonsmall nobackground noborder white bold font-2 pointer ml-3" type="submit" name="logout">Logout</button>
+                    <button class="buttonsmall nobackground noborder white bold font-2 pointer ml-2" type="submit" name="logout">Logout</button>
                 </form>
             <?php
             } else {
@@ -38,7 +41,6 @@ $user_id = $_SESSION['user_id'];
             <?php
             }
             ?>
-
         </form>
     </div>
 </header>
