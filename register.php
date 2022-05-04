@@ -99,7 +99,7 @@ if (isset($_POST['register'])){
 <html>
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - Register
         </title>
         <link rel="stylesheet" href="style.css">
         <?php include_once("components/header.html"); ?>

@@ -51,10 +51,10 @@ if (isset($_POST['addtocart'])) {
 <html>
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - Product
         </title>
         <link rel="stylesheet" href="style.css">
-        <?php include_once("components/headerlogin.php"); ?>
+        <?php include_once("components/header.php"); ?>
     </head>
     <body>
         <?php

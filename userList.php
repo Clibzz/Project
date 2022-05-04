@@ -4,6 +4,9 @@ session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?message");
 }
+if ($_SESSION['role_id'] !== 1) {
+    header("Location: error.php");
+}
 if (isset($_GET['success'])) {
     echo "<div class='alert-success bold pt-1 pb-1 pl-1'>Your edits have been saved succesfully.</div>";
 }
@@ -12,13 +15,13 @@ if (isset($_GET['success'])) {
 <html>
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - User List
         </title>
         <link rel="stylesheet" href="style.css">
-        <?php include_once("components/headerlogin.php"); ?>
+        <?php include_once("components/header.php"); ?>
     </head>
     <body>
-        <h1 class="w60 mt-4 mb-2">User List</h1>
+        <h1 class="w60 mt-4 mb-2">Users</h1>
         <table class="table w60 borderridge">
             <thead class="backblue white">
                 <tr>

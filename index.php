@@ -29,7 +29,7 @@
                                 $_SESSION['username'] = $username;
                                 $_SESSION['password'] = $password;
                                 $_SESSION['birthdate'] = $birthdate;
-                                header ("Location: homepage.php?home");
+                                header ("Location: homepage.php");
                             } else {
                                 echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
                             }
@@ -54,13 +54,13 @@
 <html lang="en">
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - Login
         </title>
         <link rel="stylesheet" href="style.css">
         <?php include_once("components/header.html"); ?>
     </head>
     <body>
-        <div class="loginbox mt-10">
+        <div class="loginbox border mt-10">
             <h2 class="pt-2">Login</h2>
             <form method="post">
                 <p class="pt-5">Username<br></p>

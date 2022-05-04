@@ -99,6 +99,9 @@ h2 {
 .borderridge {
   border: 1px ridge rgb(204, 204, 204);
 }
+.borderrad {
+  border-radius: 10px;
+}
 .noborder {
   border: none;
 }
@@ -152,16 +155,12 @@ h2 {
 .content {
   margin-left: 20%;
 }
-.hlabel {
-  padding-right: 170px;
-}
 .search {
   height: 30px;
   width: 280px;
 }
 .loginbox {
   width: 25%;
-  border: 1px solid black;
   padding-left: 0.8%;
 }
 .inputlogin {
@@ -239,6 +238,9 @@ h2 {
 }  
 
 /* Padding left */
+.pl-0 {
+  padding-left: 0rem;
+}
 .pl-1 {
   padding-left: 0.5rem;
 }
@@ -525,3 +527,14 @@ h2 {
   z-index: 1;
 }
 
+/* width */
+::-webkit-scrollbar {
+    height: 10px;
+}
+
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: dodgerblue; 
+  border-radius: 10px;
+}

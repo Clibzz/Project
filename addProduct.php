@@ -100,10 +100,10 @@ if (isset($_POST['addproduct'])) {
     <html>
         <head>
             <title>
-                NHL Webshop
+                NHL Webshop - Add product
             </title>
             <link rel="stylesheet" href="style.css">
-            <?php include_once("components/headerlogin.php"); ?>
+            <?php include_once("components/header.php"); ?>
         </head>
         <body>
             <div class="w60">
@@ -130,7 +130,7 @@ if (isset($_POST['addproduct'])) {
                     <input class="inputproduct" type="text" name="price" maxlength="6">
                     <p class="pt-2 mb-1">Image<br></p>
                     <input class="inputproduct" type="file" name="uploaded_file">
-                    <button class="nodec mt-2 mb-2 backblue noborder button pointer textcenter white" name="addproduct">Add Product</button>
+                    <button class="nodec mt-2 mb-2 backblue noborder bold button pointer textcenter white" name="addproduct">Add Product</button>
                 </form>
             </div>
         </body>

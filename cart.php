@@ -45,10 +45,10 @@
 <html lang="en">
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - Cart
         </title>
         <link rel="stylesheet" href="style.css">
-        <?php include_once("components/headerlogin.php"); ?>
+        <?php include_once("components/header.php"); ?>
     </head>
     <body>
         <?php
@@ -63,14 +63,14 @@
             </div><?php
         } ?>
         <form method="post">
-            <table class="w60 borderridge mb-2">
+            <table class="w60 mb-2">
                 <thead class="backblue white">
                     <tr>
                         <th>Image</th>
                         <th>Title</th>
                         <th>Amount</th>
                         <th>Price</th>
-                        <th>Edit</th>
+                        <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -91,12 +91,12 @@
                                 <form method="post">
                                     <input type="hidden" name="cart_id" value=<?php echo $cart_id ?>>
                                     <input type="hidden" name="user_id" value=<?php echo $user_id ?>>
-                                    <td class="w20 h30"><img class="w30 h30 backwhite mt-1 mb-1" src="images/<?php echo $image ?>"></td>
+                                    <td class="w20 h30"><img class="w50 h50 backwhite mt-1 mb-1" src="images/<?php echo $image ?>"></td>
                                     <td><a class="blue textcenter" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
                                     <td><input class="textcenter buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
                                     <td><?php echo "&euro;&nbsp;" . $price * $amount?></td>
-                                    <td><button class="pointer bold backblue noborder buttonsmall white" type="submit" name="update">Update</button></td>
-                                    <td><button class="pointer bold backblue white noborder buttonsmall" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer bold backblue noborder buttonsmall white">Delete</button></td>
+                                    <td><button class="pointer bold backblue button noborder white" type="submit" name="update">Update</button></td>
+                                    <td><button class="pointer bold backblue button noborder white" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer bold backblue noborder buttonsmall white">Delete</button></td>
                                 </form>
                             </tr><?php
                         }
@@ -111,6 +111,7 @@
         <?php
         $sql = "SELECT  * 
                 FROM    cart
+                WHERE user_id = " . $_SESSION['user_id'] . "
                 ";
         $result = $conn->query($sql);
         $cartTotal = 0;
@@ -124,9 +125,9 @@
         <div class="w60 mb-1">
             <div class="right">
                 <form class="" method="post">
-                    <p class="pointer right nobackground bold  w100 borderridge mb-2 textcenter " type="text" name="total">Total price:<br>&euro;&nbsp;<?php echo $cartTotal  ?></button>
+                    <p class="pointer nobackground bold borderridge w100 mb-2 " type="text" name="total">Total price:<br>&euro;&nbsp;<?php echo $cartTotal  ?></button>
                 </form> 
-                <form class="" method="post">
+                <form method="post">
                     <button class="pointer right bold backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>
                 </form> 
             </div>

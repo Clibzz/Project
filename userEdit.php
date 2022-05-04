@@ -4,6 +4,9 @@ session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?message");
 }
+if ($_SESSION['role_id'] !== 1) {
+    header("Location: error.php");
+}
 if (isset($_POST['update'])) {
     if ($user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT)){
         if ($role_id = filter_input(INPUT_POST, 'role_id', FILTER_SANITIZE_NUMBER_INT)) {
@@ -50,10 +53,10 @@ if (isset($_POST['update'])) {
 <html lang="en">
     <head>
         <title>
-            NHL Webshop
+            NHL Webshop - User Edit
         </title>
         <link rel="stylesheet" href="style.css">
-        <?php include_once("components/headerlogin.php"); ?>
+        <?php include_once("components/header.php"); ?>
     </head>
     <body>
         <?php
