@@ -95,8 +95,8 @@
                                     <td><a class="blue textcenter" href="productpage.php?id=<?php echo $product_id ?>"><?php echo $title ?></a></td>
                                     <td><input class="textcenter buttonsmall" type="text" name="amount" value="<?php echo $amount ?>"></td>
                                     <td><?php echo "&euro;&nbsp;" . $price * $amount?></td>
-                                    <td><button class="pointer backblue noborder buttonsmall white" type="submit" name="update">Update</button></td>
-                                    <td><button class="pointer backblue white noborder buttonsmall" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer backblue noborder buttonsmall white">Delete</button></td>
+                                    <td><button class="pointer bold backblue noborder buttonsmall white" type="submit" name="update">Update</button></td>
+                                    <td><button class="pointer bold backblue white noborder buttonsmall" type="submit" name="delete" value=<?php echo $cart_id ?> class="pointer bold backblue noborder buttonsmall white">Delete</button></td>
                                 </form>
                             </tr><?php
                         }
@@ -109,16 +109,25 @@
             </table>
         </form>
         <?php
-
-            
+        $sql = "SELECT  * 
+                FROM    cart
+                ";
+        $result = $conn->query($sql);
+        $cartTotal = 0;
+        if ($result->num_rows > 0) {
+            // Associative array of the selected values
+            while ($row = $result->fetch_assoc()) {
+                $cartTotal += $row["price"] * $row["amount"];
+            }
+        }
         ?>
         <div class="w60 mb-1">
             <div class="right">
                 <form class="" method="post">
-                    <p class="pointer right nobackground bold  w100 borderridge mb-2 textcenter " type="text" name="total">Total price:<br>&euro;&nbsp;<?php  ?></button>
+                    <p class="pointer right nobackground bold  w100 borderridge mb-2 textcenter " type="text" name="total">Total price:<br>&euro;&nbsp;<?php echo $cartTotal  ?></button>
                 </form> 
                 <form class="" method="post">
-                    <button class="pointer right backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>
+                    <button class="pointer right bold backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>
                 </form> 
             </div>
         </div>
