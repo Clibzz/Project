@@ -115,7 +115,7 @@
         $result = $conn->query($sql);
         $cartTotal = 0;
         if ($result->num_rows > 0) {
-            // Associative array of the selected values
+            // Loop through the values of the associative array
             while ($row = $result->fetch_assoc()) {
                 $cartTotal += $row["price"] * $row["amount"];
             }
