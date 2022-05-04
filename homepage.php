@@ -20,7 +20,7 @@ if (isset($_POST['addproduct'])) {
         <?php include_once("components/header.php"); ?>
     </head>
     <body>
-        <div class="pl-0 w60">
+        <div class="w60">
             <h2 class="mt-4 font-2"><b>Select one of the following categories</b></h2>
             <form method="post" class="pt-2 font-2">
                 <input type="submit" class="blue pointer nobackground ml-0 pl-0 noborder font-2" value="Phones" name="phones"> - <input type="submit" class="blue pointer nobackground noborder font-2" value="Computers" name="computers" > - <input type="submit" class="blue pointer nobackground noborder font-2" value="Components" name="components"> - <input type="submit" class="blue pointer nobackground noborder font-2" value="Smart Watches" name="smartwatches"> - <input type="submit" class="blue pointer nobackground noborder font-2 mb-3" value="Smart Home" name="smarthome">
@@ -31,7 +31,7 @@ if (isset($_POST['addproduct'])) {
             <div class="flex">
                <h1 class="mt-4">Found products</h1>
                <form method="post">
-                    <input class="button pointer white noborder backblue mt-6 mb-2 right" type="submit" name="addproduct" value="Add Product">
+                    <input class="button pointer white noborder borderrad backblue mt-6 mb-2 right" type="submit" name="addproduct" value="Add Product">
                 </form>
             </div><?php
         } else { ?>
@@ -195,7 +195,7 @@ if (isset($_POST['addproduct'])) {
                                 <div>
                                     <form class="borderridge" method="post">  
                                         <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome mb-0 textcenter" src="images/<?php echo $image ?>" alt="product">
+                                        <img class="imagehome mb-0" src="images/<?php echo $image ?>" alt="product">
                                         <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
                                     </form>
                                 </div>

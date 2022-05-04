@@ -3,10 +3,7 @@
   margin: auto;
 }
 header {
-  color: white;
-  display: flex;
   height: 60px;
-  font-size: 1.3em;
 }
 h2 {
   margin-right: 200px;
@@ -110,9 +107,6 @@ h2 {
 }
 .textcenter {
   text-align: center;
-}
-.selfcenter {
-  align-self: center;
 }
 
 .font-1 {
@@ -527,12 +521,11 @@ h2 {
   z-index: 1;
 }
 
-/* width */
+/* Scrollbar */
+/* height */
 ::-webkit-scrollbar {
     height: 10px;
 }
-
- 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: dodgerblue; 
