@@ -10,6 +10,9 @@ if ($_SESSION['role_id'] !== 1) {
 if (isset($_GET['success'])) {
     echo "<div class='alert-success bold pt-1 pb-1 pl-1'>Your edits have been saved succesfully.</div>";
 }
+if (isset($_GET['deleted'])) {
+    echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The account has succesfully been deleted.</div>";
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +25,7 @@ if (isset($_GET['success'])) {
     </head>
     <body>
         <h1 class="w60 mt-4 mb-2">Users</h1>
-        <table class="table w60 borderridge">
+        <table class="table w60">
             <thead class="backblue white">
                 <tr>
                     <th>User_id</th>
@@ -30,7 +33,7 @@ if (isset($_GET['success'])) {
                     <th>Email address</th>
                     <th>Username</th>
                     <th>Birthdate</th>
-                    <th>Edit</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,12 +48,12 @@ if (isset($_GET['success'])) {
                 if (mysqli_stmt_num_rows($stmt) > 0) { 
                     while (mysqli_stmt_fetch($stmt)) { ?>
                         <tr class="textcenter backgray">
-                            <td class="backblue white bold"><?php echo $user_id ?></td>
+                            <td class="backblue white bold"><input class="backblue textcenter white fontnormal noborder" name="user_id" type="text" value="<?php echo $user_id ?>" readonly></td>
                             <td><?php echo $role_id ?></td>
                             <td><?php echo $email ?></td>
                             <td><?php echo $username ?></td>
                             <td><?php echo $birthdate ?></td>
-                            <td><a href="userEdit.php?id=<?php echo $user_id; ?>">Edit</a></td>
+                            <td><a class="linkblue nodec" href="userEdit.php?id=<?php echo $user_id; ?>">Edit</a></td>
                         </tr><?php
                     }
                 } else {

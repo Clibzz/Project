@@ -64,14 +64,14 @@
         } ?>
         <form method="post">
             <table class="w60 mb-2">
-                <thead class="backblue white">
+                <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Price</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,8 +124,9 @@
         ?>
         <div class="w60 mb-1">
             <div class="right">
-                <form class="" method="post">
-                    <p class="pointer nobackground bold borderridge w100 mb-2 " type="text" name="total">Total price:<br>&euro;&nbsp;<?php echo $cartTotal  ?></button>
+                <form class="borderridge mb-2" method="post">
+                    <p class="pointer textcenter nobackground bold w100" type="text" name="total">Total price:</p>
+                    <p class="textcenter">&euro;&nbsp;<?php echo $cartTotal  ?></p>
                 </form> 
                 <form method="post">
                     <button class="pointer right bold backgreen white noborder pt-1 pb-3 button" type="submit" name="checkout">Checkout</button>

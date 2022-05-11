@@ -16,23 +16,29 @@ $user_id = $_SESSION['user_id'];
 ?>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<header class="backblue flex">
-    <form class="w60" method="post">
-        <a class="mr-10 white bold nodec font-3" href="homepage.php"><b>NHL WEBSHOP</b></a>
-        <input class="ml-10 pr-6 search" type="text" name="search" placeholder="Search">
-        <?php
-        if ($role_id == 1) {?>
-            <button class="right ml-5 backblue noborder white bold font-3 pointer mt-1 mb-1" type="submit" name="logout">Logout</button>
-            <a class="right" href="cart.php"><span class="material-icons white mr-5 ml-5 mt-1 mb-1">shopping_cart</span></a>
-            <a class="right" href="userList.php"><span class="material-icons white mr-5 mt-1 mb-1">manage_accounts</span></a>
-            
-        <?php
-        } else {
-        ?>
-            <button class="right ml-10 backblue noborder white bold font-3 pointer mt-1 mb-1" type="submit" name="logout">Logout</button>
-            <a class="right" href="cart.php"><span class="material-icons white mr-10 mt-1 mb-1">shopping_cart</span></a>
-        <?php
-        }
-        ?>
-    </form>
+<header class="backblue">
+    <div class="flex pt-2 w60">
+        <a class="white font-3 bold ml-0 nodec" href="homepage.php">NHL WEBSHOP</a>
+        <form method="get">
+            <input class="search" placeholder="Search" type="text" name="search">
+        </form>
+            <?php
+            if ($role_id == 1) {?>
+                <a href="userList.php"><span class="material-icons white verticalmid">manage_accounts</span></a>
+                <a href="cart.php"><span class="material-icons white verticalmid">shopping_cart</span></a>
+                <form class="mr-0" method="post">
+                    <button name="logout" class="pointer white noborder nobackground font-3 bold">Logout</button>
+                </form>
+            <?php
+            } else {
+            ?>
+                <span class="material-icons white verticalmid">shopping_cart</span>
+                <form class="mr-0" method="post">
+                    <button name="logout" class="pointer white noborder nobackground font-3 bold">Logout</button>
+                </form>
+            <?php
+            }
+            ?>
+        </form>
+    </div>
 </header>

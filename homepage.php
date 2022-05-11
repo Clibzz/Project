@@ -28,10 +28,10 @@ if (isset($_POST['addproduct'])) {
         </div>
         <?php 
         if ($role_id == 1) {?>
-            <div class="flex">
-               <h1 class="mt-4">Found products</h1>
-               <form method="post">
-                    <input class="button pointer white noborder borderrad backblue mt-6 mb-2 right" type="submit" name="addproduct" value="Add Product">
+            <div class="flex w60">
+               <h1 class="mt-4 ml-0 pl-0">Found products</h1>
+               <form class="mr-0" method="post">
+                    <input class="button pointer white noborder borderrad backblue mt-6 mb-2 mr-1 pr-0" type="submit" name="addproduct" value="Add Product">
                 </form>
             </div><?php
         } else { ?>
@@ -49,19 +49,15 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray borderridge w60 overflow"><?php
+            ?>  <div class="w60"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -77,19 +73,15 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray borderridge w60 overflow"><?php
+            ?>  <div class="w60"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -105,19 +97,15 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray borderridge w60 overflow"><?php
+            ?>  <div class="w60"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -133,19 +121,15 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray borderridge w60 overflow"><?php
+            ?>  <div class="w60"><?php
                     while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -161,19 +145,16 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray borderridge w60 overflow"><?php
-                    while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="h100 imagehome textcenter" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+            ?>  <div class="w60"><?php
+                    while (mysqli_stmt_fetch($stmt)) { 
+                        ?>
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {
@@ -188,19 +169,16 @@ if (isset($_POST['addproduct'])) {
             mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
             if (mysqli_stmt_num_rows($stmt) > 0) { 
-                ?> <div class="flex borderrad backgray border w60 overflow"><?php
-                    while (mysqli_stmt_fetch($stmt)) { ?>
-                        <a class="black nodec textcenter" href="productpage.php?id=<?php echo $product_id ?>">
-                            <div>
-                                <div>
-                                    <form class="borderridge" method="post">  
-                                        <input type="hidden" name="cart_id" value=<?php echo $product_id ?>>
-                                        <img class="imagehome mb-0" src="images/<?php echo $image ?>" alt="product">
-                                        <?php echo "<div class='block pt-1 pb-1'><b>&euro;&nbsp;" . $price . "</b></div>"?>
-                                    </form>
-                                </div>
+                ?> <div class="w60"><?php
+                    while (mysqli_stmt_fetch($stmt)) { 
+                        ?>  
+                        <a href="productpage.php?id=<?php echo $product_id?>">
+                            <div class="border ml-0 mb-2 mr-1 pt-1 pb-1 pl-1 pr-1 left">
+                                <img class="imagehome" src="images/<?php echo $image ?>" alt="<?php echo $title ?>">
+                                <p class="black borderridge textcenter"><b>&euro;<?php echo $price ?></b></p>
                             </div>
-                        </a><?php
+                        </a>
+                        <?php
                     }?>
                 </div><?php
             } else {

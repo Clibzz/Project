@@ -108,9 +108,11 @@ h2 {
 .textcenter {
   text-align: center;
 }
-
 .font-1 {
   font-size: 0.8em;
+}
+.fontnormal {
+  font-size: 1em;
 }
 .font-2 {
   font-size: 1.05em;
@@ -143,14 +145,14 @@ h2 {
   text-decoration: none;
 }
 .box {
-  width: 30%;
+  width: 200px;
   height: 200px;
 }
 .content {
   margin-left: 20%;
 }
 .search {
-  height: 30px;
+  height: 20px;
   width: 280px;
 }
 .loginbox {
@@ -203,6 +205,9 @@ h2 {
 .backwhite {
   background-color: white;
 }
+.backred {
+  background-color: red;
+}
 .nobackground {
   background: none;
 }
@@ -210,6 +215,9 @@ h2 {
 /* Color */
 .blue {
   color: dodgerblue;
+}
+.linkblue {
+  color: blue;
 }
 .black {
   color: black;
@@ -528,6 +536,6 @@ h2 {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: dodgerblue; 
-  border-radius: 10px;
+  background-color: dodgerblue;
+  border-radius: 5px;
 }

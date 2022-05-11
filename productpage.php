@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 $product_id = $_GET['id'];
 $user_id = $_SESSION['user_id'];
 if (isset($_POST['addtocart'])) {
+    //Select everything from the product
     $stmt = mysqli_prepare($conn, "
             SELECT *
             FROM product
@@ -19,32 +20,61 @@ if (isset($_POST['addtocart'])) {
     mysqli_stmt_bind_result($stmt, $product_id, $title, $description, $category, $price, $image, $agelimit);
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
+
+    //Select everything from cart with the same product_id
     $stmt = mysqli_prepare($conn, "
-            INSERT
-            INTO cart (
-                cart_id,
-                user_id,
-                product_id,
-                image,
-                title,
-                amount,
-                price
-            )
-            VALUES
-            (
-                ?,
-                ?,
-                ?,
-                ?,
-                ?,
-                1,
-                ?
-            )
+        SELECT *
+        FROM cart
+        WHERE product_id = ?
     ") or die(mysqli_error($conn));
-    mysqli_stmt_bind_param($stmt, "iiissd", $cart_id, $user_id, $product_id, $image, $title, $price);
+    mysqli_stmt_bind_param($stmt, "i", $product_id);
     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-    mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-    mysqli_stmt_close($stmt);
+    mysqli_stmt_store_result($stmt);
+    mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $product_id, $image, $title, $amount, $price);
+    mysqli_stmt_fetch($stmt);
+    if (mysqli_stmt_num_rows($stmt) > 0) {
+        mysqli_stmt_close($stmt);
+        //Update the amount of the product in cart if the product already exists there
+        $stmt = mysqli_prepare($conn, "
+            UPDATE cart
+            SET amount = amount + 1
+            WHERE product_id = ?
+        ") or die(mysqli_error($conn));
+        mysqli_stmt_bind_param($stmt, 'i', $product_id);
+        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+        mysqli_stmt_close($stmt);
+        
+    } else {
+        mysqli_stmt_close($stmt);
+        //If the product doesn't exist in the cart, add a new row for it
+        $stmt = mysqli_prepare($conn, "
+        INSERT
+        INTO cart (
+            cart_id,
+            user_id,
+            product_id,
+            image,
+            title,
+            amount,
+            price
+        )
+        VALUES
+        (
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            1,
+            ?
+        )
+        ") or die(mysqli_error($conn));
+        mysqli_stmt_bind_param($stmt, "iiissd", $cart_id, $user_id, $product_id, $image, $title, $price);
+        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+        mysqli_stmt_close($stmt);
+    }
+   
 }
 ?>
 <!DOCTYPE html>
@@ -59,8 +89,7 @@ if (isset($_POST['addtocart'])) {
     <body>
         <?php
         if (isset($_POST['addtocart'])) {
-            echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart, 
-                click <a class='green' href='cart.php'> here</a> to go to the cart.</div>";
+            echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
         }
         $product_id = $_GET['id'];
         $stmt = mysqli_prepare($conn, "
