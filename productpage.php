@@ -32,11 +32,15 @@ if (isset($_POST['addtocart'])) {
     mysqli_stmt_bind_result($stmt, $user_id, $role_id, $email, $username, $hash_password, $birthdate);
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
+    //Split the birthdate in year, month and day
     list($year, $month, $day) = explode("-", $birthdate);
-    //Turn the amount of time since the user's birthdate into seconds
+    //Calculate the amount of seconds from January 1st 1970 00:00:00 GMT (mktime) to the birthdate of the user
     $seconds = mktime(0, 0, 0, $month, $day, $year);
-    //Check if the amount of seconds since the user's birthday is more than the amount of seconds in 18 years
-    if ($seconds >= 567648000) {
+    //Substracting the amount of seconds of $seconds from the amount of seconds from mktime till now
+    $diff = time() - $seconds;
+    //Divide the birthdate in seconds by a year in seconds + (1 day / 1 year) so people whose birthday is today can also buy the product
+    $age = $diff / 31556926 + 0.0027397260273973;
+    if ($age > 18 ) {
         //Select everything from cart with the same product_id
         $stmt = mysqli_prepare($conn, "
                 SELECT *
@@ -90,6 +94,7 @@ if (isset($_POST['addtocart'])) {
             mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
             mysqli_stmt_close($stmt);
         }
+        echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
     } else {
         echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>You're too young to be able to buy this product.</div>";
     }   
@@ -106,14 +111,6 @@ if (isset($_POST['addtocart'])) {
     </head>
     <body>
         <?php
-        if (isset($_POST['addtocart'])) {
-            //Check if the amount of seconds since the user's birthday is more than the amount of seconds in 18 years
-            if ($seconds >= 567648000) {
-                echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
-            } else {
-                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>You're too young to be able to buy this product.</div>";
-            }
-        }
         $product_id = $_GET['id'];
         //Select all necessary entities of the specific product
         $stmt = mysqli_prepare($conn, "
