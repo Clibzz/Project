@@ -136,10 +136,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `role_id`, `email`, `username`, `hash_password`, `birthdate`) VALUES
-(1, 1, 'chris.klunder@student.nhlstenden.com', 'admin', '$2y$10$FfvXx1Fkzh7WxB4bYADUbeAdFBTJVYk9MzHEaj9V4VYeXp9m1utpW', '2001-08-07'),
-(2, 3, 'chriscrossje2001@gmail.com', 'chris', '$2y$10$rAU2CQwMC0tmIreyUxnXjOJ777R8snsTooU9mqG/Safe3KmKm.pbW', '2022-02-01'),
-(3, 2, 'clibzzyt@gmail.com', 'orderpicker', '$2y$10$PwJ/hfE8BO7mtKzxs8GqeO5iSsZh64tiH6uhF1nB2JI.K5EW8QIYO', '1991-07-11'),
-(4, 0, 'hajohilbrands@gmail.com', 'Hajo', '$2y$10$4CWHrMpaSyfBt3icTz8.PuIXG8CwAVqYV0s2hjuTW0YLF4GGx37qW', '2002-04-16');
+(1, 1, 'admin@nhlstenden.com', 'admin', '$2y$10$FfvXx1Fkzh7WxB4bYADUbeAdFBTJVYk9MzHEaj9V4VYeXp9m1utpW', '2001-08-07'),
+(2, 3, 'user@nhlstenden.com', 'chris', '$2y$10$rAU2CQwMC0tmIreyUxnXjOJ777R8snsTooU9mqG/Safe3KmKm.pbW', '2022-02-01'),
+(3, 2, 'orderpicker@nhlstenden.com', 'orderpicker', '$2y$10$PwJ/hfE8BO7mtKzxs8GqeO5iSsZh64tiH6uhF1nB2JI.K5EW8QIYO', '1991-07-11');
 
 --
 -- Indexen voor geëxporteerde tabellen

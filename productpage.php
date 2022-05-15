@@ -21,60 +21,78 @@ if (isset($_POST['addtocart'])) {
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
 
-    //Select everything from cart with the same product_id
+    //Select everything from user to be able to check their age
     $stmt = mysqli_prepare($conn, "
-        SELECT *
-        FROM cart
-        WHERE product_id = ?
+            SELECT *
+            FROM user
+            WHERE user_id = ".$_SESSION['user_id']."
     ") or die(mysqli_error($conn));
-    mysqli_stmt_bind_param($stmt, "i", $product_id);
     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
     mysqli_stmt_store_result($stmt);
-    mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $product_id, $image, $title, $amount, $price);
+    mysqli_stmt_bind_result($stmt, $user_id, $role_id, $email, $username, $hash_password, $birthdate);
     mysqli_stmt_fetch($stmt);
-    if (mysqli_stmt_num_rows($stmt) > 0) {
-        mysqli_stmt_close($stmt);
-        //Update the amount of the product in cart if the product already exists there
+    mysqli_stmt_close($stmt);
+    list($year, $month, $day) = explode("-", $birthdate);
+    //Turn the amount of time since the user's birthdate into seconds
+    $seconds = mktime(0, 0, 0, $month, $day, $year);
+    //Check if the amount of seconds since the user's birthday is more than the amount of seconds in 18 years
+    if ($seconds >= 567648000) {
+        //Select everything from cart with the same product_id
         $stmt = mysqli_prepare($conn, "
-            UPDATE cart
-            SET amount = amount + 1
-            WHERE product_id = ?
+                SELECT *
+                FROM cart
+                WHERE product_id = ?
         ") or die(mysqli_error($conn));
-        mysqli_stmt_bind_param($stmt, 'i', $product_id);
+        mysqli_stmt_bind_param($stmt, "i", $product_id);
         mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-        mysqli_stmt_close($stmt);
-        
+        mysqli_stmt_store_result($stmt);
+        mysqli_stmt_bind_result($stmt, $cart_id, $user_id, $product_id, $image, $title, $amount, $price);
+        mysqli_stmt_fetch($stmt);
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            mysqli_stmt_close($stmt);
+            //Update the amount of the product in cart if the product already exists there
+            $stmt = mysqli_prepare($conn, "
+                UPDATE cart
+                SET amount = amount + 1
+                WHERE product_id = ?
+            ") or die(mysqli_error($conn));
+            mysqli_stmt_bind_param($stmt, 'i', $product_id);
+            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+            mysqli_stmt_close($stmt);
+            
+        } else {
+            mysqli_stmt_close($stmt);
+            //If the product doesn't exist in the cart, add a new row for it
+            $stmt = mysqli_prepare($conn, "
+                    INSERT
+                    INTO cart (
+                        cart_id,
+                        user_id,
+                        product_id,
+                        image,
+                        title,
+                        amount,
+                        price
+                    )
+                    VALUES
+                    (
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        1,
+                        ?
+                    )
+            ") or die(mysqli_error($conn));
+            mysqli_stmt_bind_param($stmt, "iiissd", $cart_id, $user_id, $product_id, $image, $title, $price);
+            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+            mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+            mysqli_stmt_close($stmt);
+        }
     } else {
-        mysqli_stmt_close($stmt);
-        //If the product doesn't exist in the cart, add a new row for it
-        $stmt = mysqli_prepare($conn, "
-        INSERT
-        INTO cart (
-            cart_id,
-            user_id,
-            product_id,
-            image,
-            title,
-            amount,
-            price
-        )
-        VALUES
-        (
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            1,
-            ?
-        )
-        ") or die(mysqli_error($conn));
-        mysqli_stmt_bind_param($stmt, "iiissd", $cart_id, $user_id, $product_id, $image, $title, $price);
-        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-        mysqli_stmt_close($stmt);
-    }
-   
+        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>You're too young to be able to buy this product.</div>";
+    }   
 }
 ?>
 <!DOCTYPE html>
@@ -89,9 +107,15 @@ if (isset($_POST['addtocart'])) {
     <body>
         <?php
         if (isset($_POST['addtocart'])) {
-            echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
+            //Check if the amount of seconds since the user's birthday is more than the amount of seconds in 18 years
+            if ($seconds >= 567648000) {
+                echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
+            } else {
+                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>You're too young to be able to buy this product.</div>";
+            }
         }
         $product_id = $_GET['id'];
+        //Select all necessary entities of the specific product
         $stmt = mysqli_prepare($conn, "
                 SELECT *
                 FROM product
@@ -118,10 +142,10 @@ if (isset($_POST['addtocart'])) {
             </div>
         </div>
         <div class="w60 flex mt-8">
-            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt="Iphone 13">
-            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt="Iphone 13">
-            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt="Iphone 13">
-            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt="Iphone 13">
+            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt=". <?php echo $title ?> .">
+            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt=". <?php echo $title ?> .">
+            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt=". <?php echo $title ?> .">
+            <img class="w20 borderridge" src="images/<?php echo $image ?>" alt=". <?php echo $title ?> .">
         </div>
     </body>
 </html>

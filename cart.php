@@ -14,9 +14,9 @@
     if (isset($_POST['delete'])) {
         if ($cart_id = filter_input(INPUT_POST, 'delete', FILTER_SANITIZE_NUMBER_INT)) { 
             $delstmt = mysqli_prepare($conn, "
-                    DELETE 
-                    FROM    cart
-                    WHERE   cart_id = ?
+                        DELETE 
+                        FROM    cart
+                        WHERE   cart_id = ?
             ") or die(mysqli_error($conn));
             mysqli_stmt_bind_param($delstmt, "i", $cart_id);
             mysqli_stmt_execute($delstmt) or die(mysqli_error($conn));

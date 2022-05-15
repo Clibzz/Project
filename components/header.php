@@ -15,6 +15,7 @@ $role_id = $_SESSION['role_id'];
 $user_id = $_SESSION['user_id'];
 ?>
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="images/LogoStenden.png" type="image/x-icon">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <header class="backblue">
     <div class="flex pt-2 w60">
@@ -32,7 +33,7 @@ $user_id = $_SESSION['user_id'];
             <?php
             } else {
             ?>
-                <span class="material-icons white verticalmid">shopping_cart</span>
+                <a href="cart.php"><span class="material-icons white verticalmid">shopping_cart</span></a>
                 <form class="mr-0" method="post">
                     <button name="logout" class="pointer white noborder nobackground font-3 bold">Logout</button>
                 </form>

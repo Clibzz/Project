@@ -64,9 +64,9 @@ if (isset($_POST['delete'])) {
     mysqli_stmt_close($stmt);
 
     $delstmt = mysqli_prepare($conn, "
-            DELETE 
-            FROM user
-            WHERE user_id = ?
+                DELETE 
+                FROM user
+                WHERE user_id = ?
     ") or die(mysqli_error($conn));
     mysqli_stmt_bind_param($delstmt, "i", $user_id);
     mysqli_stmt_execute($delstmt);

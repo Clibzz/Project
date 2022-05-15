@@ -2,96 +2,79 @@
 include_once("connection.php");
 $accountCreated = false;
 if (isset($_POST['register'])){
-    if (!empty($_POST['email'])) {
-        if (!empty($_POST['username'])){
-            if (!empty($_POST['password'])){
-                if (!empty($_POST['birthdate'])) {
-                    if ($email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                        if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                            if ($password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                                $birthdate = new DateTime($_POST['birthdate']);
-                                $birthdate = $birthdate -> format("Y-m-d");
-                                list($y, $m, $d) = explode("-", $birthdate);
-                                $curdate = date("Y-m-d");
-                                list($cur_y, $cur_m, $cur_d) = explode("-", $curdate);
-                                if ($birthdate <= $curdate) {
-                                        
-                                    $hash_password = password_hash($password, PASSWORD_DEFAULT);
-                            
-                                    $stmt = mysqli_prepare($conn, "
-                                            SELECT username
-                                            FROM user
-                                            WHERE username = ?
-                                    ") or die(mysqli_error($conn));
-                                    mysqli_stmt_bind_param($stmt, "s", $username);
-                                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                    mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                                    if (mysqli_stmt_num_rows($stmt) == 0) {
-                                        mysqli_stmt_close($stmt);
-        
-                                        $stmt = mysqli_prepare($conn, "
-                                                SELECT email
-                                                FROM user
-                                                WHERE email = ?
-                                        ") or die(mysqli_error($conn));
-                                        mysqli_stmt_bind_param($stmt, "s", $email);
-                                        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                                        if (mysqli_stmt_num_rows($stmt) == 0) {
-                                            mysqli_stmt_close($stmt);
-                                            $stmt = mysqli_prepare($conn, "
-                                                    INSERT
-                                                    INTO user (
-                                                        user_id,
-                                                        email,
-                                                        username,
-                                                        hash_password,
-                                                        birthdate
-                                                    )
-                                                    VALUES
-                                                    (
-                                                        ?,
-                                                        ?,
-                                                        ?,
-                                                        ?,
-                                                        ?
-                                                    )
-                                            ") or die(mysqli_error($conn));
-                                            mysqli_stmt_bind_param($stmt, "issss", $user_id, $email, $username, $hash_password, $birthdate);
-                                            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                                            mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                                            mysqli_stmt_close($stmt);
-                                            ?><div class="alert-success bold pt-1 pb-1 pl-1 nodec">Your account has been registered succesfully!</div><?php
-                                            $accountCreated = true;
-                                        } else {
-                                            echo "<div class='alert-danger bold'>This email address has already been taken, please try again.</div>";
-                                        }
-                                    } else {
-                                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>This username has already been taken, please try again.</div>";
-                                    }
-                                } else {
-                                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>This birthdate is invalid, please try again.</div>";
-                                }
-                            } else {
-                                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your password.</div>";
-                            }
+    if ($email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+        if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            if ($password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+                $birthdate = new DateTime($_POST['birthdate']);
+                $birthdate = $birthdate -> format("Y-m-d");
+                list($y, $m, $d) = explode("-", $birthdate);
+                $curdate = date("Y-m-d");
+                list($cur_y, $cur_m, $cur_d) = explode("-", $curdate);
+                if ($birthdate <= $curdate) {
+                    $hash_password = password_hash($password, PASSWORD_DEFAULT);
+            
+                    $stmt = mysqli_prepare($conn, "
+                            SELECT username
+                            FROM user
+                            WHERE username = ?
+                    ") or die(mysqli_error($conn));
+                    mysqli_stmt_bind_param($stmt, "s", $username);
+                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                    mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+                    if (mysqli_stmt_num_rows($stmt) == 0) {
+                        mysqli_stmt_close($stmt);
+
+                        $stmt = mysqli_prepare($conn, "
+                                SELECT email
+                                FROM user
+                                WHERE email = ?
+                        ") or die(mysqli_error($conn));
+                        mysqli_stmt_bind_param($stmt, "s", $email);
+                        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+                        if (mysqli_stmt_num_rows($stmt) == 0) {
+                            mysqli_stmt_close($stmt);
+                            $stmt = mysqli_prepare($conn, "
+                                    INSERT
+                                    INTO user (
+                                        user_id,
+                                        email,
+                                        username,
+                                        hash_password,
+                                        birthdate
+                                    )
+                                    VALUES
+                                    (
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?,
+                                        ?
+                                    )
+                            ") or die(mysqli_error($conn));
+                            mysqli_stmt_bind_param($stmt, "issss", $user_id, $email, $username, $hash_password, $birthdate);
+                            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                            mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+                            mysqli_stmt_close($stmt);
+                            ?><div class="alert-success bold pt-1 pb-1 pl-1 nodec">Your account has been registered succesfully!</div><?php
+                            $accountCreated = true;
                         } else {
-                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your username.</div>";
-                        } 
+                            echo "<div class='alert-danger bold'>This email address has already been taken, please try again.</div>";
+                        }
                     } else {
-                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your email address.</div>";
+                        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>This username has already been taken, please try again.</div>";
                     }
                 } else {
-                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in your birthdate.</div>";
+                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>This birthdate is invalid, please try again.</div>";
                 }
             } else {
-                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a password.</div>";
+                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your password.</div>";
             }
         } else {
-            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a username.</div>";
-        }
+            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your username.</div>";
+        } 
     } else {
-        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in an email address.</div>";
+        echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in your email address.</div>";
     }
 }
 ?>

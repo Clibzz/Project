@@ -6,36 +6,28 @@
         echo $message;
     }
     if (isset($_POST['login'])){ 
-        if (isset($_POST['username']) && !empty($_POST['username'])){
-            if (isset($_POST['password']) && !empty($_POST['password'])){
-                if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                    if ($password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
-                        $stmt = mysqli_prepare($conn, "
-                            SELECT *
-                            FROM user
-                            WHERE username = ?
-                        ") or die(mysqli_error($conn));
-                        mysqli_stmt_bind_param($stmt, "s", $username);
-                        mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                        mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
-                        mysqli_stmt_bind_result($stmt, $user_id, $role_id, $email, $username, $hash_password, $birthdate);
-                        mysqli_stmt_fetch($stmt);
-                        if(mysqli_stmt_num_rows($stmt) > 0){
-                            mysqli_stmt_close($stmt);
-                            if(password_verify($password, $hash_password)){
-                                $_SESSION['user_id'] = $user_id;
-                                $_SESSION['role_id'] = $role_id;
-                                $_SESSION['email'] = $email;
-                                $_SESSION['username'] = $username;
-                                $_SESSION['password'] = $password;
-                                $_SESSION['birthdate'] = $birthdate;
-                                header ("Location: homepage.php");
-                            } else {
-                                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
-                            }
-                        } else {
-                            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
-                        }
+        if ($username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+            if ($password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS)) {
+                $stmt = mysqli_prepare($conn, "
+                        SELECT *
+                        FROM user
+                        WHERE username = ?
+                ") or die(mysqli_error($conn));
+                mysqli_stmt_bind_param($stmt, "s", $username);
+                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
+                mysqli_stmt_bind_result($stmt, $user_id, $role_id, $email, $username, $hash_password, $birthdate);
+                mysqli_stmt_fetch($stmt);
+                if(mysqli_stmt_num_rows($stmt) > 0){
+                    mysqli_stmt_close($stmt);
+                    if(password_verify($password, $hash_password)){
+                        $_SESSION['user_id'] = $user_id;
+                        $_SESSION['role_id'] = $role_id;
+                        $_SESSION['email'] = $email;
+                        $_SESSION['username'] = $username;
+                        $_SESSION['password'] = $password;
+                        $_SESSION['birthdate'] = $birthdate;
+                        header ("Location: homepage.php");
                     } else {
                         echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
                     }
@@ -43,10 +35,10 @@
                     echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
                 }
             } else {
-                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a password.</div>";
+                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
             }
         } else {
-            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a username.</div>";
+            echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The username or password is incorrect, please try again.</div>";
         }
     }
 ?>
