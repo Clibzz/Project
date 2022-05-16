@@ -40,7 +40,7 @@ if (isset($_POST['addtocart'])) {
     $diff = time() - $seconds;
     //Divide the birthdate in seconds by a year in seconds + (1 day / 1 year) so people whose birthday is today can also buy the product
     $age = $diff / 31556926 + 0.0027397260273973;
-    if ($age > 18 ) {
+    if ($agelimit == "18+" && $age >= 18 || $agelimit == "Nolimit") {
         //Select everything from cart with the same product_id
         $stmt = mysqli_prepare($conn, "
                 SELECT *
