@@ -24,8 +24,8 @@ if (isset($_POST['addtocart'])) {
     //Select everything from user to be able to check their age
     $stmt = mysqli_prepare($conn, "
             SELECT *
-            FROM user
-            WHERE user_id = ".$_SESSION['user_id']."
+            FROM user u
+            WHERE u.user_id = ".$_SESSION['user_id']."
     ") or die(mysqli_error($conn));
     mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
     mysqli_stmt_store_result($stmt);
@@ -41,6 +41,7 @@ if (isset($_POST['addtocart'])) {
     //Divide the birthdate in seconds by a year in seconds + (1 day / 1 year) so people whose birthday is today can also buy the product
     $age = $diff / 31556926 + 0.0027397260273973;
     if ($agelimit == "18+" && $age >= 18 || $agelimit == "Nolimit") {
+        
         //Select everything from cart with the same product_id
         $stmt = mysqli_prepare($conn, "
                 SELECT *
@@ -54,15 +55,19 @@ if (isset($_POST['addtocart'])) {
         mysqli_stmt_fetch($stmt);
         if (mysqli_stmt_num_rows($stmt) > 0) {
             mysqli_stmt_close($stmt);
-            //Update the amount of the product in cart if the product already exists there
-            $stmt = mysqli_prepare($conn, "
-                UPDATE cart
-                SET amount = amount + 1
-                WHERE product_id = ?
-            ") or die(mysqli_error($conn));
-            mysqli_stmt_bind_param($stmt, 'i', $product_id);
-            mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-            mysqli_stmt_close($stmt);
+            if ($amount < 100) {
+                //Update the amount of the product in cart if the product already exists there
+                $stmt = mysqli_prepare($conn, "
+                    UPDATE cart
+                    SET amount = amount + 1
+                    WHERE product_id = ?
+                ") or die(mysqli_error($conn));
+                mysqli_stmt_bind_param($stmt, 'i', $product_id);
+                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                mysqli_stmt_close($stmt);
+            } else {
+                echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>The amount of this product in your cart is already at the maximum allowed amount.</div>";
+            }
             
         } else {
             mysqli_stmt_close($stmt);
@@ -93,8 +98,8 @@ if (isset($_POST['addtocart'])) {
             mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
             mysqli_stmt_store_result($stmt) or die(mysqli_error($conn));
             mysqli_stmt_close($stmt);
+            echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
         }
-        echo "<div class='alert-success bold pt-1 pb-1 pl-1'>The product has been succesfully added to the cart.</div>";
     } else {
         echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>You're too young to be able to buy this product.</div>";
     }   

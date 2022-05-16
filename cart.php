@@ -10,7 +10,6 @@
         header("Location: overview.php");
     }
    
-    
     if (isset($_POST['delete'])) {
         if ($cart_id = filter_input(INPUT_POST, 'delete', FILTER_SANITIZE_NUMBER_INT)) { 
             $delstmt = mysqli_prepare($conn, "
@@ -27,14 +26,18 @@
     if (isset($_POST['update'])) {
         if ($amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_INT)){
             if ($cart_id = filter_input(INPUT_POST, 'cart_id', FILTER_SANITIZE_NUMBER_INT)) {
-                $stmt = mysqli_prepare($conn, "
-                        UPDATE cart
-                        SET amount = ?
-                        WHERE cart_id = ?                                
-                ") or die(mysqli_error($conn));
-                mysqli_stmt_bind_param($stmt, 'ii', $amount, $cart_id);
-                mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
-                mysqli_stmt_close($stmt);     
+                if ($amount < 101) {
+                    $stmt = mysqli_prepare($conn, "
+                            UPDATE cart
+                            SET amount = ?
+                            WHERE cart_id = ?                                
+                    ") or die(mysqli_error($conn));
+                    mysqli_stmt_bind_param($stmt, 'ii', $amount, $cart_id);
+                    mysqli_stmt_execute($stmt) or die(mysqli_error($conn));
+                    mysqli_stmt_close($stmt);    
+                } else {
+                    echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please fill in a valid amount.</div>";
+                } 
             }
         } else {
             echo "<div class='alert-danger bold pt-1 pb-1 pl-1'>Please refrain from using special characters in the amount field.</div>";
